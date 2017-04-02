@@ -25,69 +25,67 @@ TargetError = 0.0
 
 
 
-	# function to generate random values for weights
-	def GetRandom():
-		return random.uniform(0,1)
+# function to generate random values for weights
+def GetRandom():
+	return random.uniform(0,1)
 
-	# function to set random weights 
-	def SetWeight():
-		# Initialize weights to random values.
-		print "\n	Initial Weights:-\n"
-		for j in range(HiddenNodes):
-			weightsHO[j] = (GetRandom() - 0.5) / 2
-			
-			for i in range(InputNodes):
-				weightsIH[i][j] = (GetRandom() - 0.5) / 5
-				print "\t 	", weightsIH[i][j]
+# function to set random weights 
+def SetWeight():
+	# Initialize weights to random values.
+	print "\n	Initial Weights:-\n"
+	for j in range(HiddenNodes):
+		weightsHO[j] = (GetRandom() - 0.5) / 2	
 
-
-	# funcion to initialise data at input nodes
-	def SetData():
-
-		TrainInput[0][0] = 1
-		TrainInput[0][1] = -1
-		TrainInput[0][2] = 1 # Bias input
-		TrainOutput[0] = 1
-
-		TrainInput[1][0] = -1
-		TrainInput[1][1] = 1
-		TrainInput[1][2] = 1 # Bias input
-		TrainOutput[1] = 1
-
-		TrainInput[2][0] = 1
-		TrainInput[2][1] = 1
-		TrainInput[2][2] = 1 # Bias input
-		TrainOutput[2] = -1
-
-		TrainInput[3][0] = -1
-		TrainInput[3][1] = -1
-		TrainInput[3][2] = 1 # Bias input
-		TrainOutput[3] = -1
+		for i in range(InputNodes):
+			weightsIH[i][j] = (GetRandom() - 0.5) / 5
+			print "\t 	", weightsIH[i][j]
 
 
-	# function to build ANN
-	def BuildNetwork():
+# funcion to initialise data at input nodes
+def SetData():
+	TrainInput[0][0] = 1
+	TrainInput[0][1] = -1
+	TrainInput[0][2] = 1 # Bias input
+	TrainOutput[0] = 1
 
-		for i in range ( HiddenNodes )
-		
+	TrainInput[1][0] = -1
+	TrainInput[1][1] = 1
+	TrainInput[1][2] = 1 # Bias input
+	TrainOutput[1] = 1
+
+	TrainInput[2][0] = 1
+	TrainInput[2][1] = 1
+	TrainInput[2][2] = 1 # Bias input
+	TrainOutput[2] = -1
+
+	TrainInput[3][0] = -1
+	TrainInput[3][1] = -1
+	TrainInput[3][2] = 1 # Bias input
+	TrainOutput[3] = -1
+
+
+# function to build ANN
+def BuildNetwork():
+
+	for i in range ( HiddenNodes ):
 		HiddenValue[i] = 0.0
 
-		for j in range( InputNodes )			
-		HiddenValue[i] = HiddenValue[i] + (TrainInput[pattern][j] * weightsIH[j][i])
+		for j in range( InputNodes ):			
+			HiddenValue[i] = HiddenValue[i] + (TrainInput[pattern][j] * weightsIH[j][i])
 
 		HiddenValue[i] = tanh(HiddenValue[i])
 
-		ExpectedOutput = 0.0
+	ExpectedOutput = 0.0
 
-		for i in range( HiddenNodes )		
+	for i in range( HiddenNodes ):	
 		ExpectedOutput = ExpectedOutput + HiddenValue[i] * weightsHO[i]
 		
 		#Calculate the error for the pattern as(Expected - Actual)
-		CurrentError = ExpectedOutput - TrainOutput[pattern]
+	CurrentError = ExpectedOutput - TrainOutput[pattern]
 
 
-	# functions to update the weights 
-	def UpdateWeightHO():
+# functions to update the weights 
+def UpdateWeightHO():
 	
 	for k in range(HiddenNodes):
 		weightChange = RateLearningHO * CurrentError * HiddenValue[k]
@@ -96,95 +94,80 @@ TargetError = 0.0
 		if (weightsHO[k] < -5):
 			weightsHO[k] = -5
 
-		else if (weightsHO[k] > 5):
+		elif (weightsHO[k] > 5):
 			weightsHO[k] = 5
 
-	def UpdateWeightIH():
-
-		for i in range(HiddenNodes )
-			for  k in range ( InputNodes)
-				x = 1 - (HiddenValue[i] * HiddenValue[i])
-				x = x * weightsHO[i] * CurrentError * RateLearningIH
-				x = x * TrainInput[pattern][k]
-				weightChange = x
-				weightsIH[k][i] = weightsIH[k][i] - weightChange
+def UpdateWeightIH():
+	for i in range(HiddenNodes ):
+		for  k in range ( InputNodes):
+			x = 1 - (HiddenValue[i] * HiddenValue[i])
+			x = x * weightsHO[i] * CurrentError * RateLearningIH
+			x = x * TrainInput[pattern][k]
+			weightChange = x
+			weightsIH[k][i] = weightsIH[k][i] - weightChange
 	
-	# calculate RMS error overall
-	def FindError():
-		Error = 0.0
+# calculate RMS error overall
+def FindError():
+	Error = 0.0
 
-		for i in range ( MaxPatterns )
-			pattern = i
-			BuildNetwork()
-			Error = Error + (CurrentError * CurrentError)
+	for i in range ( MaxPatterns ):
+		pattern = i
+		BuildNetwork()
+		Error = Error + (CurrentError * CurrentError)
 		
-		Error = Error / MaxPatterns
-		Error = sqrt(Error)
+	Error = Error / MaxPatterns
+	Error = sqrt(Error)
 
-	# function to display the output
-	def Display()
+# function to display the output
+def Display():
 	
-		print "\n"
-		for i in range ( MaxPatterns )
-			pattern = i
-			BuildNetwork()
-			print pattern + 1 , ". "
-			print " Expected  = ", TrainOutput[pattern]
-			print " Predicted = ", ExpectedOutput 
-
+	print "\n"
+	for i in range ( MaxPatterns ):
+		pattern = i
+		BuildNetwork()
+		print pattern + 1 , ". "
+		print " Expected  = ", TrainOutput[pattern]
+		print " Predicted = ", ExpectedOutput 
 	
 # -------- MAIN PART -------------------------------------
 
-	XOR_Network x	# instance for the class
-
-	cout<<" 	Enter Target Error:  "
-	cin >> TargetError
-	cout<<"	Enter Learning Rate:  "
-	cin >> RateLearningIH
-	
-	cout<<"\n		Setting up weights .. "<<endl
-	x.SetWeight()
-
-	cout<<"\n		Setting up data nodes .. "<<endl
-	x.SetData()
-
-	cout<<"\n		Building the network now .."<<endl
-
-	# Training the network
-	for (int j = 0 j <= MaxEpoch j++)
-	
-	for (int i = 0 i < MaxPatterns i++)
-
-			pattern = rand() % MaxPatterns		# pick a random pattern number
-			x.BuildNetwork()					# generate the neural network
-			x.UpdateWeightHO()					# get the changes in hidden to ouput weights
-			x.UpdateWeightIH()					# get the changes in input to hidden weights
-
-
-		x.FindError()		# calculate the error for the pattern
+TargetError = raw_input(" Enter Target Error:  ")
+RateLearningIH = raw_input(" Enter Learning Rate:  ")
 		
-		if (j==0)
-		cout << "\n Error - Batch I : " <<Error << endl
+print "\n		Setting up weights .. "
+SetWeight()
 
-		if (Error < TargetError)	# print output and stop once error < target error
+print "\n		Setting up data nodes .. "
+SetData()
+
+print "\n		Building the network now .."
+
+# Training the network
+for j in range(MaxEpoch ):
+	
+	for i in range( MaxPatterns ):
+
+		pattern = random.uniform(0,1) % MaxPatterns		# pick a random pattern number
+		BuildNetwork()					# generate the neural network
+		UpdateWeightHO()					# get the changes in hidden to ouput weights
+		UpdateWeightIH()					# get the changes in input to hidden weights
+
+	FindError()		# calculate the error for the pattern
 		
-		cout << "\n 	Final Weights:\n"
-		for (int k = 0 k < HiddenNodes k++)
+	if (j==0):
+		print "\n Error - Batch I : ", Error 
 
-		for (int i = 0 i < InputNodes i++)
+	if (Error < TargetError):	# print output and stop once error < target error
+		
+		print "\n 	Final Weights:\n"
 
+		for k in range( HiddenNodes ):
+			for i in range( InputNodes ):
+				print "\t 	",  weightsIH[i][k] 
 
-		cout << "\t 	" << weightsIH[i][k] << endl
-
-
-		cout << "\n Error - Final Batch : "<< Error<<"\n\tin epoch number: "<< j <<endl
+		print "\n Error - Final Batch : ", Error, "\n\tin epoch number: ", j 
 		break
-		
 
-	# print the results 
-	x.Display()
-	cout << "\n Total number of epochs :" << MaxEpoch<<endl
-
-	return 0
-
-
+# print the results 
+Display()
+print "\n Total number of epochs :",  MaxEpoch
