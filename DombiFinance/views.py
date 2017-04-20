@@ -4,20 +4,20 @@ import MySQLdb
 import numpy
 import math
 
-db = MySQLdb.connect("127.0.0.1","root","","Real-Time" )    # DB 1 for real-time
-db2 = MySQLdb.connect("127.0.0.1","root","","Historical" )  # DB for historical data
+#db = MySQLdb.connect("127.0.0.1","root","","Real-Time" )    # DB 1 for real-time
+db = MySQLdb.connect("127.0.0.1","root","","Historical" )  # DB for historical data
 
 # cursors for the two DB's
 cursor = db.cursor()    
-cursor2 = db2.cursor()
+#cursor2 = db2.cursor()
 
 
 def bayesian(data):
     x_10 =[]
     t_data = []
-    for i in xrange(len(data) - 90, len(data)):
+    for i in range(len(data) - 90, len(data)):
         t_data.append(data[i])
-    for i in xrange(1, 11):
+    for i in range(1, 11):
         x_10.append(i)
     t=[]
     t.append(t_data)
@@ -65,9 +65,9 @@ def bayesian(data):
     for i in t_data:
         sum += i
     avg = sum / len(t_data)
-    print 'mov', avg
+    print ('mov', avg)
     per = ((mean - avg) / avg) * 100
-    print 'error % = ', per
+    print ('error % = '), per
     final = []
     mean = round(mean, 3)
     per = round(per, 3)
@@ -82,7 +82,7 @@ cursor.execute(sql)
 results = cursor.fetchall()
 for row in results:
       data.append(row[0])
-print 'price', results
+print ('price'), results
 # data1 = [21.45,23.45,21.34,22.32,23.18]
 # data2 = [100.12,101.64,102.20,99.65,100.42]#ADP
 # data3 = [14.93,14.75,15.05,15.50,15.45]#NYT
@@ -94,9 +94,9 @@ print 'price', results
 # data9 = [325.67,331.87,331.55,330.42,333.55,332.88,330.12,334.5,335.21,334.45]
 # data10 = [1325.67,1321.87,1331.55,1334.42,1333.15,1328.88,1324.12,1330.35,1335.21,1334.45]
 prediction = bayesian(data)
-print 'Data'
+print ('Data')
 # print 'data1 = [21.45,23.45,21.34,22.32,23.18]'
-print 'Final Prediction', prediction
+print ('Final Prediction'), prediction
 # print 'Data2'
 # prediction = bayesian(data2)
 # print 'data2 = [100.12,101.64,102.20,99.65,100.42]'

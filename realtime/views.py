@@ -26,9 +26,10 @@ A = Share('AMZN')
 E = Share('EA')
 AP = Share('AAPL')
 
-def show()
-    print " inside views.py "
-    return render_to_response("blog.html",{})
+def show(request):
+    #print " inside views.py "
+    #return render_to_response("blog.html",{})
+    return HttpResponse(" Accessing Show now.")
 
 # function to track real time data
 def RealTimeStocks():
@@ -107,7 +108,7 @@ def HistoricalStocks():
 
 # Call the two functions
 #RealTimeStocks()
-HistoricalStocks()
+#HistoricalStocks()
 
 # close databases
 db.close()
