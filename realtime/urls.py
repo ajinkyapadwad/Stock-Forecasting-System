@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^index', views.index, name='index'),
     url(r'^prediction', views.prediction, name='prediction'),
     url(r'^news', views.news, name='news'),
+    url(r'^contact', views.contact, name='contact'),
 ]
