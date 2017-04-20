@@ -4,9 +4,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the DombiFinance index.")
-
 import MySQLdb                      #import SQL DB library
 import datetime                     #import date time library
 from yahoo_finance import Share     #import yahoo finance library
@@ -26,10 +23,23 @@ A = Share('AMZN')
 E = Share('EA')
 AP = Share('AAPL')
 
-def show(request):
-    #print " inside views.py "
-    #return render_to_response("blog.html",{})
-    return HttpResponse(" Accessing Show now.")
+# def mypythonfunction(num):
+#     return HttpResponse("Mischief managed. YEAH !")
+
+# def request_page(request):
+#     if(request.GET.get('mybtn')):
+#         mypythonfunction( int(request.GET.get('mytextbox')) )
+#     return render(request,'/templateHTML.html')
+
+def index(request):
+    #return HttpResponse("Mischief managed.")
+    return render(request, 'realtime/index.html') 
+
+
+# def show(request):
+#     #print " inside views.py "
+#     #return render_to_response("blog.html",{})
+#     return HttpResponse(" Accessing Show now.")
 
 # function to track real time data
 def RealTimeStocks():

@@ -1,0 +1,8 @@
+<form action="{% url path.to.request_page %}" method="POST">
+    <input id="submit" type="button" value="Click" />
+</form>
+
+
+-------------------------------------------------------------
+
+<a href="{% url 'index' %}"><button>GO!</button></a>
