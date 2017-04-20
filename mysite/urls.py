@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from realtime import views
+
 
 urlpatterns = [
-	url(r'^$', views.index, name='index'),
+
 	url(r'^realtime/', include('realtime.urls')),
 	url(r'^admin/', admin.site.urls),
 ]

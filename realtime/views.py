@@ -35,6 +35,10 @@ def index(request):
     #return HttpResponse("Mischief managed.")
     return render(request, 'realtime/index.html') 
 
+def prediction(request):
+    #return HttpResponse("Mischief managed.")
+    return render(request, 'realtime/prediction.html') 
+
 
 # def show(request):
 #     #print " inside views.py "
