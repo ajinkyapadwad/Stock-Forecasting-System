@@ -2,6 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+{% load staticfiles %}
+
 <title>PredStocks | News</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -12,6 +14,8 @@
 <script type="text/javascript" src="js/cuf_run.js"></script>
 </head>
 <body>
+<a href="{% url 'news' %}"> </a>
+
     <div class="header">
     <div class="logo">
       <h1><a href="#"><span>Pred</span>Stocks<br><small>One stop solution to smart prediction !</small></a></h1>
@@ -21,7 +25,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="support.html">Prediction</a></li>
         
-        <li class="active"><a href="blog.html">News</a></li>
+        <li class="active"><a href="news.html">News</a></li>
         <li><a href="contact.html">Contact Us</a></li>
       </ul>
     </div>

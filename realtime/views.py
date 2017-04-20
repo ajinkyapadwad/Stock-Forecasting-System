@@ -36,8 +36,10 @@ def index(request):
     return render(request, 'realtime/index.html') 
 
 def prediction(request):
-    #return HttpResponse("Mischief managed.")
     return render(request, 'prediction.html') 
+
+def news(request):
+    return render(request, 'news.html') 
 
 
 # def show(request):
