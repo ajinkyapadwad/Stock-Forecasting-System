@@ -20,6 +20,5 @@ from realtime import views
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^realtime/', include('realtime.urls')),
-	url(r'^DombiFinance/', include('DombiFinance.urls')),
-    url(r'^admin/', admin.site.urls),
+	url(r'^admin/', admin.site.urls),
 ]
