@@ -37,7 +37,7 @@ def index(request):
 
 def prediction(request):
     #return HttpResponse("Mischief managed.")
-    return render(request, 'realtime/prediction.html') 
+    return render(request, 'prediction.html') 
 
 
 # def show(request):

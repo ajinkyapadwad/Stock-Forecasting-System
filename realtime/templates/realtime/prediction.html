@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+{% load staticfiles %}
+
 <title>PredStocks | Prediction</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -13,23 +15,35 @@
 </head>
 <body>
 
+<a href="{% url 'prediction' %}"> </a>
 
+<style type="text/css">
+html, 
+body {
+height: 100%;
+}
 
-    <div class="header">
+body {
+background-image: url(static/realtime/img/back.jpg);
+background-repeat: no-repeat;
+background-size: 100% 100%;
+}
+</style>
+  <div class="header">
     <div class="logo">
       <h1><a href="#"><span>Pred</span>Stocks<br><small>One stop solution to smart prediction !</small></a></h1>
     </div>
     <div class="menu_nav">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="support.html">Prediction</a></li>
+        <li><a href="">Home</a></li>
+        <li class="active"><a href="prediction.html">Prediction</a></li>
         
-        <li class="active"><a href="blog.html">News</a></li>
-        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="realtime/blog.html">News</a></li>
+        <li><a href="realtime/contact.html">Contact Us</a></li>
       </ul>
     </div>
     <div class="clr"></div>
-    <div class="hbg"><img src="header.jpeg" width="970" height="366" alt="" class="fl" />
+    <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="366" alt="" class="fl" />
       
       
     </div>
@@ -42,7 +56,7 @@
           <form method="get" id="search" action="#">
             <span>
             <input type="text" value="Search..." name="s" id="s" />
-            <input name="searchsubmit" type="image" src="search.gif" value="Go" id="searchsubmit" class="btn"  />
+            <input name="searchsubmit" type="image" src="{% static 'realtime/img/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
 			
             </span>
           </form>
