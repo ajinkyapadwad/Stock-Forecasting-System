@@ -1,10 +1,13 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 """
     APRIL 2017
     (c) Ajinkya
 """
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from django.http import HttpResponseRedirect
 
 import MySQLdb                      #import SQL DB library
 import datetime                     #import date time library
@@ -16,7 +19,7 @@ import time                         #import time library for delay
 def index(request):
     return render(request, 'realtime/index.html') 
 
-def prediction(request):
+def pred(request):
     return render(request, 'realtime/prediction.html') 
 
 def news(request):
@@ -27,14 +30,15 @@ def contact(request):
 
 
 
+
 # ------------------------------------------------------------
 
 # ----------------------- REALTIME / HISTORICAL  DATA LOGGING----------------------------
 import numpy
 import math
 
-db = MySQLdb.connect("127.0.0.1","root","","realtime" )    # DB 1 for real-time
-db2 = MySQLdb.connect("127.0.0.1","root","","historical" )  # DB for historical data
+db = MySQLdb.connect("127.0.0.1","root","password","realtime" )    # DB 1 for real-time
+db2 = MySQLdb.connect("127.0.0.1","root","password","historical" )  # DB for historical data
 
 # cursors for the two DB's
 cursor = db.cursor()    
@@ -189,6 +193,13 @@ def HistoricalStocks():
 
 # ------------------------ BAYESIAN ---------------------------------------------
 
+def passing(request):
+    options=request.GET.get('optionsRadios')
+    dur = request.GET.get('predict')
+    print options
+    print dur
+    pred = query(options)
+    return render(request,'realtime/prediction2_new.html',{'pred':pred}) 
 def bayesian(data):
     x_10 =[]
     t_data = []
@@ -255,25 +266,25 @@ def bayesian(data):
 def query(name):
 
     data=[]
-    if name is A:
+    if name is 'amazon':
         sql = "SELECT price FROM Amazon"
-    elif name is AP:
+    elif name is 'apple':
         sql = "SELECT price FROM Apple"
-    elif name is F:
+    elif name is 'facebook':
         sql = "SELECT price FROM Facebook"
-    elif name is G:
+    elif name is 'google':
         sql = "SELECT price FROM Google"
-    elif name is E:
+    elif name is 'easports':
         sql = "SELECT price FROM EAsports"
-    elif name is M:
+    elif name is 'microsoft':
         sql = "SELECT price FROM Microsoft"
-    elif name is W:
+    elif name is 'walmart':
         sql = "SELECT price FROM Walmart"
-    elif name is Y:
+    elif name is 'yahoo':
         sql = "SELECT price FROM Yahoo"
-    elif name is S:
+    elif name is 'sony':
         sql = "SELECT price FROM Sony"
-    elif name is N:
+    elif name is 'nikon':
         sql = "SELECT price FROM Nikon"
 
     # Prepare SQL query to INSERT a record into the database.
@@ -287,10 +298,12 @@ def query(name):
     print ("FINAL PREDICTION BAYESIAN : ", prediction)
     return prediction
 
-pred = query(F)
 
-def newprediction(request):
-    return render(request, 'realtime/newprediction.html', {'content':[pred, 'here']})
+    
+
+
+##def newprediction(request):
+##    return render(request, 'realtime/newprediction.html', {'content':[pred, 'here']})
 # ----------------------------------------------------------------------------
 
 # -----------------------  NEURAL NETWORK ---------------------------------------
@@ -590,3 +603,5 @@ def newprediction(request):
 # 	#main()
 
 # # ------------------------------------------------------------------------------------------------------
+
+
