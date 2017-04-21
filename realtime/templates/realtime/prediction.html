@@ -14,8 +14,35 @@
 <script type="text/javascript" src="realtime/js/arial.js"></script>
 <script type="text/javascript" src="realtime/js/cuf_run.js"></script>
 
+<!-- new one here -->
+
+ <link rel="stylesheet" type="text/css"  href="/static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
+
+    <script type="text/javascript" src="/static/js/modernizr.custom.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+
+
+
+    <script type="text/javascript" src="/static/js/jquery.1.11.1.js"></script>
+
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+
+    <script src="/static/js/handlebars.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+
 </head>
 <body>
+
+<form action="/newform/" method="post">
+    <label for="newform">Your name: </label>
+    <input id="newform" type="text" name="newform" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
 
 <a href="{% url 'prediction' %}"> </a>
 
@@ -63,7 +90,37 @@
       </div>
       
 </div>
- <form>
+
+ </br>
+    </br>
+    <div class="container ">
+
+      <div class="form-group col-sm-4 col-sm-offset-4">
+      <form class="" id="search">
+        <input type="text" class="form-control typeahead" placeholder="Search Stock Information" id="typeahead" data-url="/static/data/stock.json" usr-url="" />
+        </form>
+      </div>
+    </div>
+
+    </br>
+    </br>
+    
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.1.11.1.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+
+    <!-- Javascripts
+    ================================================== -->
+     <script src="/static/js/typeahead.js"></script>
+      <script src="/static/js/search.js"></script>
+  </body>
+</script>
+
+
+<!--  <form method="POST">
   <div class = "Prediction">
   <h9> Please Select Company?</h9>
   </div>
@@ -130,7 +187,7 @@
   </label>
   </div>
 </div>
- </form> 
+ </form>  -->
  
  <form>
    <div class = "Prediction">

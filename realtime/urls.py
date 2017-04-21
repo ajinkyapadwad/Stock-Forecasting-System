@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^news', views.news, name='news'),
     url(r'^contact', views.contact, name='contact'),
     url(r'^newprediction', views.newprediction, name='newprediction'),
+    url(r'^newform', views.get_name, name='get_name'),
 ]
