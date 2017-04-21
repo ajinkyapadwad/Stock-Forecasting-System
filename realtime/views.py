@@ -11,7 +11,6 @@ from django.http import HttpResponseRedirect
 
 from django.template import RequestContext
 
-from .forms import NameForm
 
 
 import MySQLdb                      #import SQL DB library
@@ -33,23 +32,8 @@ def news(request):
 def contact(request):
 	return render(request, 'realtime/contact.html') 
 
-# def get_name(request):
-# 	# if this is a POST request we need to process the form data
-# 	if request.method == 'POST':
-# 		# create a form instance and populate it with data from the request:
-# 		form = NameForm(request.POST)
-# 		# check whether it's valid:
-# 		if form.is_valid():
-# 			# process the data in form.cleaned_data as required
-# 			# ...
-# 			# redirect to a new URL:
-# 			return HttpResponseRedirect('/thanks/')
-
-# 	# if a GET (or any other method) we'll create a blank form
-# 	else:
-# 		form = NameForm()
-
-# 	return render_to_response(request, 'realtime/name.html', {'form': form})
+def search(request,name):
+	return render(request, 'realtime/search.html',{'name':name})
 
 
 # # ------------------------------------------------------------
@@ -319,8 +303,8 @@ def passing(request):
 	# print options
 	# print dur
 	#pred = query(options)
-	pred = analyzeSymbol(options)
-
+	#pred = analyzeSymbol(options)
+	#pred = svm(optionsRadios,10)
 	return render(request,'realtime/prediction2_new.html',{'pred':pred}) 
 
 
@@ -629,164 +613,81 @@ def analyzeSymbol(stockSymbol):
 	returnData['price'] = predictedStockPrice
 	returnData['time'] = time.time() - startTime
 
-	return returnData
+	return predictionData[1]
 
 
 
 # # ------------------------------------------------------------------------------------------------------
 
-# # ---------------------------------- STATE VECTOR MACHINE -----------------------------------------------
+# # ---------------------------------- SUPPORT VECTOR MACHINE -----------------------------------------------
 
-# import pandas
-# import numpy as np
-# from sklearn import preprocessing
-# from sklearn import svm
-# from sklearn import cross_validation
+# import scipy
+# from scipy.stats import norm
+# from sklearn.svm import SVR, SVC, LinearSVC
 
-# # read the data
-# df = pandas.read_csv('techsectordatareal.csv')
-# daysAhead = 270
+# def svm(name, day):
+#     '''
+#     Input: Name of the stock, How many days of after current day to get predicted price
+#     Output: Predicted Price for next n days
+#     '''
+#     data = gethistorical(name)
+#     data = data[::-1]
+#     open_price_list = []
+#     close_price_list = []
+#     predicted_price=[]
+#     for i in xrange(len(data)):
+#         open_price_list.append(data[i][1])
+#         close_price_list.append(data[i][2])
+#     for iterations in range(day):
+#         close_price_dataset=[]
+#         open_price_dataset=[]
+#         previous_ten_day_close_price_dataset=[]
+#         g=0
+#         h=50
+#         while h<len(close_price_list):
+#             previous_ten_day_close_price_dataset.append(close_price_list[g:h])
+#             open_price_dataset.append(open_price_list[h])
+#             close_price_dataset.append(close_price_list[h])
+#             g += 1
+#             h += 1
+#         moving_average_dataset=[]
+#         for x in previous_ten_day_close_price_dataset:
+#             i=0
+#             for y in x:
+#                 i=i+y
+#             moving_average_dataset.append(i/10)
+#         feature_dataset = []
+#         for j in range(len(close_price_dataset)):
+#             list = []
+#             list.append(moving_average_dataset[j])
+#             list.append(open_price_dataset[j])
+#             feature_dataset.append(list)
+#         feature_dataset = numpy.array(feature_dataset)        
+#         close_price_dataset = numpy.array(close_price_dataset)
+#         clf = SVR(kernel='linear',degree=1)
+#         clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
+#         target = []
+#         if iterations==0:
+#             url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
+#             stock_info = Share(name)
+#             list = []
+#             list.append(stock_info.get_open())
+#             list.append(stock_info.get_50day_moving_avg())
+#             target.append(list)
+            
+#         else:
+#             list = []
+#             list.append(moving_average_dataset[-1])
+#             list.append(open_price_dataset[-1])
+#             target.append(list)
 
-# # calculate price volatility array given company
-# def calcPriceVolatility(numDays, priceArray):
-# 	global daysAhead
-# 	# make price volatility array
-# 	volatilityArray = []
-# 	movingVolatilityArray = []
-# 	for i in range(1, numDays+1):
-# 		percentChange = 100 * (priceArray[i] - priceArray[i-1]) / priceArray[i-1]
-# 		movingVolatilityArray.append(percentChange)
-# 	volatilityArray.append(np.mean(movingVolatilityArray))
-# 	for i in range(numDays + 1, len(priceArray) - daysAhead):
-# 		del movingVolatilityArray[0]
-# 		percentChange = 100 * (priceArray[i] - priceArray[i-1]) / priceArray[i-1]
-# 		movingVolatilityArray.append(percentChange)
-# 		volatilityArray.append(np.mean(movingVolatilityArray))
+#         predicted_close_price = clf.predict(target)[0]
+#         predicted_price.append(predicted_close_price)
+#         open_price_list.append(close_price_list[-1])
+#         close_price_list.append(predicted_close_price)
+    
+#     return predicted_price
 
-# 	return volatilityArray
-
-# # calculate momentum array
-# def calcMomentum(numDays, priceArray):
-# 	global daysAhead
-# 	# now calculate momentum
-# 	momentumArray = []
-# 	movingMomentumArray = []
-# 	for i in range(1, numDays + 1):
-# 		movingMomentumArray.append(1 if priceArray[i] > priceArray[i-1] else -1)
-# 	momentumArray.append(np.mean(movingMomentumArray))
-# 	for i in range(numDays+1, len(priceArray) - daysAhead):
-# 		del movingMomentumArray[0]
-# 		movingMomentumArray.append(1 if priceArray[i] > priceArray[i-1] else -1)
-# 		momentumArray.append(np.mean(movingMomentumArray))
-
-# 	return momentumArray
-
-# def makeModelAndPredict(permno, numDays, sectorVolatility, sectorMomentum, splitNumber):
-# 	global df
-# 	global daysAhead
-# 	# get price volatility and momentum for this company
-# 	companyData = df[df['PERMNO'] == permno]
-# 	companyPrices = list(companyData['PRC'])
-
-# 	volatilityArray = calcPriceVolatility(numDays, companyPrices)
-# 	momentumArray = calcMomentum(numDays, companyPrices)
-
-# 	splitIndex = splitNumber - numDays
-
-# 	# since they are different lengths, find the min length
-# 	if len(volatilityArray) > len(sectorVolatility):
-# 		difference = len(volatilityArray) - len(sectorVolatility)
-# 		del volatilityArray[:difference]
-# 		del momentumArray[:difference]
-
-# 	elif len(sectorVolatility) > len(volatilityArray):
-# 		difference = len(sectorVolatility) - len(volatilityArray)
-# 		del sectorVolatility[:difference]
-# 		del sectorMomentum[:difference]
-
-# 	# create the feature vectors X
-# 	X = np.transpose(np.array([volatilityArray, momentumArray, sectorVolatility, sectorMomentum]))
-
-# 	# create the feature vectors Y
-# 	Y = []
-# 	for i in range(numDays, len(companyPrices) - daysAhead):
-# 		Y.append(1 if companyPrices[i+daysAhead] > companyPrices[i] else -1)
-# 	print len(Y)
-
-# 	# fix the length of Y if necessary
-# 	if len(Y) > len(X):
-# 		print 'here2'
-# 		difference = len(Y) - len(X)
-# 		del Y[:difference]
-
-# 	# split into training and testing sets
-# 	X_train = np.array(X[0:splitIndex]).astype('float64')
-# 	X_test = np.array(X[splitIndex:]).astype('float64')
-# 	y_train = np.array(Y[0:splitIndex]).astype('float64')
-# 	y_test = np.array(Y[splitIndex:]).astype('float64')
-
-# 	# fit the model and calculate its accuracy
-# 	rbf_svm = svm.SVC(kernel='rbf')
-# 	rbf_svm.fit(X_train, y_train)
-# 	score = rbf_svm.score(X_test, y_test)
-# 	print score
-# 	return score
-
-# def main():
-# 	global df
-
-# 	# find the list of companies
-# 	permnoList = sorted(set(list(df['PERMNO'])))
-# 	companiesNotFull = [12084, 13407, 14542, 93002, 15579] # companies without full dates
-
-# 	# read the tech sector data
-# 	ndxtdf = pandas.read_csv('ndxtdata.csv')
-# 	ndxtdf = ndxtdf.sort_index(by='Date', ascending=True)
-# 	ndxtPrices = list(ndxtdf['Close'])
-
-# 	# find when 2012 starts
-# 	startOfTwelve = list(df[df['PERMNO'] == 10107]['date']).index(20120103)
-
-# 	# we want to predict where it will be on the next day based on X days previous
-# 	numDaysArray = [5, 10, 20, 90, 270] # day, week, month, quarter, year
-
-# 	predictionDict = {}
-
-# 	# iterate over combinations of n_1 and n_2 and find prediction accuracies
-# 	for numDayIndex in numDaysArray:
-# 		for numDayStock in numDaysArray:
-# 			ndxtVolatilityArray = calcPriceVolatility(numDayIndex, ndxtPrices)
-# 			ndxtMomentumArray = calcMomentum(numDayIndex, ndxtPrices)
-# 			predictionForGivenNumDaysDict = {}
-
-# 			for permno in permnoList:
-# 				if permno in companiesNotFull:
-# 					continue
-# 				print permno
-# 				percentage = makeModelAndPredict(permno,numDayStock,ndxtVolatilityArray,ndxtMomentumArray,startOfTwelve)
-# 				predictionForGivenNumDaysDict[permno] = percentage
-
-
-# 			predictionAccuracies = predictionForGivenNumDaysDict.values()
-# 			meanAccuracy = np.mean(predictionAccuracies)
-# 			maxIndex = max(predictionForGivenNumDaysDict, key=predictionForGivenNumDaysDict.get)
-# 			maxAccuracy = (maxIndex, predictionForGivenNumDaysDict[maxIndex])
-# 			minIndex = min(predictionForGivenNumDaysDict, key=predictionForGivenNumDaysDict.get)
-# 			minAccuracy = (minIndex, predictionForGivenNumDaysDict[minIndex])
-# 			median = np.median(predictionAccuracies)
-
-# 			numDaysTuple = (numDayIndex, numDayStock)
-# 			predictionDict[numDaysTuple] = {'mean':meanAccuracy, 'max':predictionForGivenNumDaysDict[maxIndex], 'min':predictionForGivenNumDaysDict[minIndex], 'median':median }
-
-# 	sortedTuples = sorted(predictionDict.keys())
-# 	for numDaysTuple in sortedTuples:
-# 		# print "%s:\t %s\n" % (numDaysTuple, predictionDict[numDaysTuple])
-# 		sumStats = predictionDict[numDaysTuple]
-# 		print "& %d & %d & %f & %f & %f & %f \\\\\n" % (numDaysTuple[0], numDaysTuple[1], sumStats['mean'], sumStats['median'], sumStats['max'], sumStats['min'])
-
-# if __name__ == "__main__": 
-# 	#main()
-
-# # ------------------------------------------------------------------------------------------------------
+# # # ------------------------------------------------------------------------------------------------------
 
 
