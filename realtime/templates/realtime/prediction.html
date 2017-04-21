@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-
 {% load staticfiles %}
 
 
@@ -14,10 +13,13 @@
 <script type="text/javascript" src="realtime/js/arial.js"></script>
 <script type="text/javascript" src="realtime/js/cuf_run.js"></script>
 
+
+
+
 </head>
 <body>
 
-<a href="{% url 'prediction' %}"> </a>
+<a href="{% url 'pred' %}"> </a>
 
     <div class="header">
     <div class="logo">
@@ -28,7 +30,7 @@
         <li><a href="index.html">Home</a></li>
         <li class="active"><a href="prediction.html">Prediction</a></li>
         
-        <li ><a href="news.html">News</a></li>
+        <li ><a href="blog.html">News</a></li>
         <li><a href="contact.html">Contact Us</a></li>
       </ul>
     </div>
@@ -63,108 +65,100 @@
       </div>
       
 </div>
- <form>
+ <form  action="{% url 'passing' %}" method="get" >
   <div class = "Prediction">
   <h9> Please Select Company?</h9>
   </div>
   
   <div class = "p1">
-  <div class="radio">
+  
+<div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="Amazon" checked>
     Amazon
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="Apple">
     Apple
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+    <input type="radio" name="optionsRadios" id="optionsRadios3" value="Facebook">
     Facebook
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4">
+    <input type="radio" name="optionsRadios" id="optionsRadios4" value="Google">
     Google
   </label>
   </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios5" value="option5">
+    <input type="radio" name="optionsRadios" id="optionsRadios5" value="EAsports">
     EAsports
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios6" value="option6">
+    <input type="radio" name="optionsRadios" id="optionsRadios6" value="Microsoft">
     Microsoft
   </label>
   </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios7" value="option7">
+    <input type="radio" name="optionsRadios" id="optionsRadios7" value="Walmart">
     Walmart
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios8" value="option8">
+    <input type="radio" name="optionsRadios" id="optionsRadios8" value="Yahoo">
     Yahoo
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios9" value="option9">
+    <input type="radio" name="optionsRadios" id="optionsRadios9" value="Sony">
     Sony
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios10" value="option10">
+    <input type="radio" name="optionsRadios" id="optionsRadios10" value="Nikon">
     Nikon
   </label>
   </div>
-</div>
- </form> 
- 
- <form>
-   <div class = "Prediction">
-  <h9> Please Select Prediction Period?</h9>
-  </div>
   
-  <div class = "p1">
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios11" value="option11" checked>
-    Short-term
-  </label>
+</div>
+  
+ 
+ 
+ <div class = "Prediction">
+ <h9> <label>Select the Prediction  :  </label><select name="predict" id="dur" ></h9>
+ </div>
+  
+ <div class = "p1">
+
+ <p>
+<option value="Short-term">Short-term</option>
+<option value="Intermediate">Intermediate</option>
+<option value="Long-term">Long-term</option>
+</select></p>
+  
+  
+  
+  
 </div>
 
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios12" value="option12">
-    Intermediate
-  </label>
-</div>
+<div class = "Prediction">
+<input type="submit" id ="send" value="SUBMIT">
 
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios13" value="option13">
-    Long-Term
-  </label>
-</div>
 </div>
 </form>
-<div class = "Prediction">
-<a href="{% url 'index' %}"><button>GO!</button></a>
-
-</div>
-
 
 	
     <div class="clr"></div>
@@ -195,5 +189,85 @@
     </div>
   </div>
 </div>
-<div align=center>We Predict the Future </div></body>
+<div align=center>We Predict the Future </div>
+</body>
+
+<!--<script type="text/javascript">
+
+		function assign() {
+		
+		var amazon = document.getElementById("optionsRadios1").value;
+		var apple = document.getElementById("optionsRadios2").value;
+		var facebook = document.getElementById("optionsRadios3").value;
+		var google = document.getElementById("optionsRadios4").value;
+		var easports = document.getElementById("optionsRadios5").value;
+		var microsoft = document.getElementById("optionsRadios6").value;
+		var walmart = document.getElementById("optionsRadios7").value;
+		var yahoo = document.getElementById("optionsRadios8").value;
+		var sony = document.getElementById("optionsRadios9").value;
+		var nikon = document.getElementById("optionsRadios10").value;
+		var company;
+		if(document.getElementById("optionsRadios1").checked == true)
+		{
+			 company = amazon;
+		}
+		if(document.getElementById("optionsRadios2").checked == true)
+		{
+			 company = apple;
+		}
+		if(document.getElementById("optionsRadios3").checked == true)
+		{
+			 company = facebook;
+		}
+		if(document.getElementById("optionsRadios4").checked == true)
+		{
+			 company = google;
+		}
+		if(document.getElementById("optionsRadios5").checked == true)
+		{
+			 company = easports;
+		}
+		if(document.getElementById("optionsRadios6").checked == true)
+		{
+			 company = microsoft;
+		}
+		if(document.getElementById("optionsRadios7").checked == true)
+		{
+			 company = walmart;
+		}
+		if(document.getElementById("optionsRadios8").checked == true)
+		{
+			 company = yahoo;
+		}
+		if(document.getElementById("optionsRadios9").checked == true)
+		{
+			 company = sony;
+		}
+		if(document.getElementById("optionsRadios10").checked == true)
+		{
+			 company = nikon;
+		}
+		
+		var time_period = document.getElementById("dur");
+		var e = time_period.options[time_period.selectedIndex].value;
+
+		$(document).on('submit','#company_name',function(e)
+		{
+			$.ajax({
+			type:"POST",
+			url:"/realtime/tejas/",
+			data:{
+			company: company,
+			duration: e,
+			
+			csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+		},
+		success:function(){
+		}
+		});
+			
+		});
+		}
+		
+</script>-->
 </html>
