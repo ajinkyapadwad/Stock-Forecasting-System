@@ -72,8 +72,14 @@
  
  
  </p>
- <center><label><font size ="10">Predicted Price:</label><input type="text" id="price" name="price" size="10" maxlength="10" /><br /></font> </center>
-
+ <left><label><font size ="5"><font color = "Black">Stock Information:</label><br /></font> </left>
+ <br> </br>
+ <left><label><font size ="5"><font color = "Black">Stock Prediction:</label><input type="text" id="price" name="price" size="10" maxlength="10" /><br /></font> </left>
+ 
+{% for c in pred%}
+	{{ pred }}
+	
+{% endfor %}
   <p>
  </p>
  <p>
@@ -90,61 +96,10 @@
  </p>
  <p>
  </p>
- <p>
- </p>
- <p>
- </p>
-  <p>
- </p>
- <p>
- </p>
- <p>
- </p>
- <p>
- </p>
- <p>
- </p>
-  <p>
- </p>
- <p>
- </p>
- <p>
- </p>
- <p>
- </p>
- <p>
- </p>
-
 
 
 	
     <div class="clr"></div>
   </div>
-</div>  
- <div class="fbg">
-    <div class="fbg_resize">
-      <div class="col c1">
-        <h2><span>Image Gallery</span></h2>
-        <a href="#"><img src="{% static 'realtime/img/image2.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image3.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image4.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image5.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image6.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image7.jpg' %}" width="58" height="58" alt="" /></a> </div>
-      
-      <div class="col c3">
-        <h2><span>About Us</span></h2>
-		
-        The stock market can be a confusing place for the average investor. But you don't need to be a hedge-fund manager or a billionaire to beat Wall Street at its own game. 
-        We seek to help the ordinary individual investor make intelligent investments by providing information that gives you an edge. 
-        PredStocks uses state of the art software to predict stock prices and generate trading "Buy-Sell" signals that will help you make your decision.</p>
-      </div>
-      <div class="clr"></div>
-    </div>
-  </div>
- 
-  <div class="footer">
-    <div class="footer_resize">
-      <p class="lf">&copy; Copyright <a href="#">MyWebSite</a>.</p>
-      <p class="rf">Prediction using Machine Learning </p>
-      <div class="clr"></div>
-    </div>
-  </div>
-</div>
-<div align=center>We Predict the Future </div></body>
+</div> </body>
 </html>
