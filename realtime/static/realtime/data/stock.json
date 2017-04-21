@@ -12,12 +12,12 @@
         "slug": "fb"
     },
     {
-        "name": "CSCO   Cisco", 
-        "slug": "csco"
+        "name": "EA   EASports", 
+        "slug": "ea"
     },
     {
-        "name": "CRM   Salesforce", 
-        "slug": "crm"
+        "name": "MSFT   Microsoft", 
+        "slug": "msft"
     },
     {
         "name": "YHOO   Yahoo", 
@@ -28,44 +28,16 @@
         "slug": "amzn"
     },
     {
-        "name": "INTL   Intel", 
-        "slug": "intl"
+        "name": "WMT   walmart", 
+        "slug": "wmt"
     },
     {
-        "name": "BAC   Bank of America", 
-        "slug": "bac"
+        "name": "SNE   Sony", 
+        "slug": "sne"
     },
     {
-        "name": "TSLA   Tesla", 
-        "slug": "tsla"
-    },
-    {
-        "name": "BCS   Barclays", 
-        "slug": "bcs"
-    },
-    {
-        "name": "IBM", 
-        "slug": "ibm"
-    },
-    {
-        "name": "GS  Goldman Sachs", 
-        "slug": "gs"
-    },
-    {
-        "name": "C   Citigroup", 
-        "slug": "c"
-    },
-    {
-        "name": "GE   General Electric", 
-        "slug": "ge"
-    },
-    {
-        "name": "JNJ   Johnson & Johnson", 
-        "slug": "jnj"
-    },
-    {
-        "name": "GM   General Motors Company", 
-        "slug": "gm"
+        "name": "NINOY   Nikon", 
+        "slug": "ninoy"
     }
 ]
 

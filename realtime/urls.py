@@ -11,6 +11,4 @@ urlpatterns = [
     url(r'^pred', views.pred, name='pred'),
     url(r'^news', views.news, name='news'),
     url(r'^contact', views.contact, name='contact'),
-    url(r'^passing', views.passing, name='passing'),
-    #url( r'^search/(?P<name>[a-zA-Z0-9_.-]+)/$', views.search, name='search_stock' ),
-]
+   ]

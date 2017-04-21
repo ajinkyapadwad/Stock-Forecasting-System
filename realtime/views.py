@@ -11,8 +11,6 @@ from django.http import HttpResponseRedirect
 
 from django.template import RequestContext
 
-
-
 import MySQLdb                      #import SQL DB library
 import datetime                     #import date time library
 from yahoo_finance import Share     #import yahoo finance library
@@ -32,10 +30,8 @@ def news(request):
 def contact(request):
 	return render(request, 'realtime/contact.html') 
 
-def search(request,name):
-	return render(request, 'realtime/search.html',{'name':name})
 
-
+	
 # # ------------------------------------------------------------
 
 # # ----------------------- REALTIME / HISTORICAL  DATA LOGGING----------------------------
@@ -187,8 +183,8 @@ def HistoricalStocks():
 			db2.commit()    # commit all the changes
 
 # Call the two functions
-# RealTimeStocks()
-# HistoricalStocks()
+#RealTimeStocks()
+#HistoricalStocks()
 
 # close databases
 # db.close()
@@ -200,10 +196,10 @@ def HistoricalStocks():
 
 
 
-def bayesian(data):
+def Bayesian(data,days):
 	x_10 =[]
 	t_data = []
-	for i in range(len(data) - 90, len(data)):
+	for i in range(len(data) - (100 - int(days)), len(data)):
 		t_data.append(data[i])
 	for i in range(1, 11):
 		x_10.append(i)
@@ -262,28 +258,29 @@ def bayesian(data):
 	
 	return mean
 
-def query(name):
+dataset=[]
+def CallBayesian(name,days):
 	print(name)
 	data=[]
-	if name in ('amazon'):
+	if name in ('amzn'):
 		sql = "SELECT price FROM Amazon"
-	elif name in ('apple'):
+	elif name in ('aapl'):
 		sql = "SELECT price FROM Apple"
-	elif name in ('facebook'):
+	elif name in ('fb'):
 		sql = "SELECT price FROM Facebook"
-	elif name in ('google'):
+	elif name in ('goog'):
 		sql = "SELECT price FROM Google"
-	elif name in ('easports'):
+	elif name in ('ea'):
 		sql = "SELECT price FROM EAsports"
-	elif name in ('microsoft'):
+	elif name in ('msft'):
 		sql = "SELECT price FROM Microsoft"
-	elif name in ('walmart'):
+	elif name in ('wmt'):
 		sql = "SELECT price FROM Walmart"
-	elif name in ('yahoo'):
+	elif name in ('yhoo'):
 		sql = "SELECT price FROM Yahoo"
-	elif name in ('sony'):
+	elif name in ('sne'):
 		sql = "SELECT price FROM Sony"
-	elif name in ('nikon'):
+	elif name in ('ninoy'):
 		sql = "SELECT price FROM Nikon"
 
 	cursor2.execute(sql)
@@ -291,25 +288,11 @@ def query(name):
 	for row in results:
 		data.append(row[0])
 	#print ('price', results)
+	dataset = data
+	prediction = Bayesian(data,days)
 
-	#prediction = bayesian(data)
-	#prediction = 
-	print ("FINAL PREDICTION BAYESIAN : ", prediction)
+	# print ("FINAL PREDICTION BAYESIAN : ", prediction)
 	return prediction
-
-def passing(request):
-	options=request.GET.get('optionsRadios')
-	dur = request.GET.get('predict')
-	# print options
-	# print dur
-	#pred = query(options)
-	#pred = analyzeSymbol(options)
-	#pred = svm(optionsRadios,10)
-	return render(request,'realtime/prediction2_new.html',{'pred':pred}) 
-
-
-
-
 
 # ----------------------------------------------------------------------------
 
@@ -322,8 +305,6 @@ import urllib2
 
 
 random.seed(0)
-
-## ================================================================
 
 # calculate a random number a <= rand < b
 def rand(a, b):
@@ -343,7 +324,6 @@ def sigmoid(x):
 def dsigmoid(y):
 	return 1.0 - y**2
 
-## ================================================================
 
 class NeuralNetwork:
 	def __init__(self, inputNodes, hiddenNodes, outputNodes):
@@ -442,11 +422,11 @@ class NeuralNetwork:
 		return self.update(inputNodes)[0]
 
 	def weights(self):
-		print('Input weights:')
+		#print('Input weights:')
 		for i in range(self.inputNodes):
 			print(self.inputWeight[i])
 		print()
-		print('Output weights:')
+		#print('Output weights:')
 		for j in range(self.hiddenNodes):
 			print(self.outputWeight[j])
 
@@ -462,8 +442,7 @@ class NeuralNetwork:
 			if i % 100 == 0:
 				print('error %-.5f' % error)
 
-
-	   
+   
 def normalizePrice(price, minimum, maximum):
 	return ((2*price - (maximum + minimum)) / (maximum - minimum))
 
@@ -481,12 +460,14 @@ def rollingWindow(seq, windowSize):
 		win[-1] = e
 		yield win
 
+MO = []
 def getMovingAverage(values, windowSize):
 	movingAverages = []
 	
 	for w in rollingWindow(values, windowSize):
 		movingAverages.append(sum(w)/len(w))
 
+	MO = movingAverages
 	return movingAverages
 
 def getMinimums(values, windowSize):
@@ -550,7 +531,7 @@ def getTrainingData(stockSymbol):
 	del historicalData[9:]
 
 	# get five 5-day moving averages, 5-day lows, and 5-day highs, associated with the closing price
-	trainingData = getTimeSeriesValues(historicalData, 5)
+	trainingData = getTimeSeriesValues(historicalData,5)
 
 	return trainingData
 
@@ -569,7 +550,7 @@ def getPredictionData(stockSymbol):
 	return predictionData
 
 
-def analyzeSymbol(stockSymbol):
+def CallNeural(stockSymbol):
 	if stockSymbol in ('amazon'):
 		stockSymbol = "AMZN"
 	if stockSymbol in ('yahoo'):
@@ -621,73 +602,146 @@ def analyzeSymbol(stockSymbol):
 
 # # ---------------------------------- SUPPORT VECTOR MACHINE -----------------------------------------------
 
-# import scipy
-# from scipy.stats import norm
-# from sklearn.svm import SVR, SVC, LinearSVC
+import scipy
+from scipy.stats import norm
+from sklearn.svm import SVR, SVC, LinearSVC
 
-# def svm(name, day):
-#     '''
-#     Input: Name of the stock, How many days of after current day to get predicted price
-#     Output: Predicted Price for next n days
-#     '''
-#     data = gethistorical(name)
-#     data = data[::-1]
-#     open_price_list = []
-#     close_price_list = []
-#     predicted_price=[]
-#     for i in xrange(len(data)):
-#         open_price_list.append(data[i][1])
-#         close_price_list.append(data[i][2])
-#     for iterations in range(day):
-#         close_price_dataset=[]
-#         open_price_dataset=[]
-#         previous_ten_day_close_price_dataset=[]
-#         g=0
-#         h=50
-#         while h<len(close_price_list):
-#             previous_ten_day_close_price_dataset.append(close_price_list[g:h])
-#             open_price_dataset.append(open_price_list[h])
-#             close_price_dataset.append(close_price_list[h])
-#             g += 1
-#             h += 1
-#         moving_average_dataset=[]
-#         for x in previous_ten_day_close_price_dataset:
-#             i=0
-#             for y in x:
-#                 i=i+y
-#             moving_average_dataset.append(i/10)
-#         feature_dataset = []
-#         for j in range(len(close_price_dataset)):
-#             list = []
-#             list.append(moving_average_dataset[j])
-#             list.append(open_price_dataset[j])
-#             feature_dataset.append(list)
-#         feature_dataset = numpy.array(feature_dataset)        
-#         close_price_dataset = numpy.array(close_price_dataset)
-#         clf = SVR(kernel='linear',degree=1)
-#         clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
-#         target = []
-#         if iterations==0:
-#             url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
-#             stock_info = Share(name)
-#             list = []
-#             list.append(stock_info.get_open())
-#             list.append(stock_info.get_50day_moving_avg())
-#             target.append(list)
+def CallSVM(name, day):
+    '''
+    Input: Name of the stock, How many days of after current day to get predicted price
+    Output: Predicted Price for next n days
+    '''
+    data = getHistoricalData(name)
+    data = data[::-1]
+    open_price_list = []
+    close_price_list = []
+    predicted_price=[]
+    for i in xrange(len(data)):
+        open_price_list.append(data[i][1])
+        close_price_list.append(data[i][2])
+    for iterations in range(day):
+        close_price_dataset=[]
+        open_price_dataset=[]
+        previous_ten_day_close_price_dataset=[]
+        g=0
+        h=50
+        while h<len(close_price_list):
+            previous_ten_day_close_price_dataset.append(close_price_list[g:h])
+            open_price_dataset.append(open_price_list[h])
+            close_price_dataset.append(close_price_list[h])
+            g += 1
+            h += 1
+        moving_average_dataset=[]
+        for x in previous_ten_day_close_price_dataset:
+            i=0
+            for y in x:
+                i=i+y
+            moving_average_dataset.append(i/10)
+        feature_dataset = []
+        for j in range(len(close_price_dataset)):
+            list = []
+            list.append(moving_average_dataset[j])
+            list.append(open_price_dataset[j])
+            feature_dataset.append(list)
+        feature_dataset = numpy.array(feature_dataset)        
+        close_price_dataset = numpy.array(close_price_dataset)
+        clf = SVR(kernel='linear',degree=1)
+        clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
+        target = []
+        if iterations==0:
+            url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
+            stock_info = Share(name)
+            list = []
+            list.append(stock_info.get_open())
+            list.append(stock_info.get_50day_moving_avg())
+            target.append(list)
             
-#         else:
-#             list = []
-#             list.append(moving_average_dataset[-1])
-#             list.append(open_price_dataset[-1])
-#             target.append(list)
+        else:
+            list = []
+            list.append(moving_average_dataset[-1])
+            list.append(open_price_dataset[-1])
+            target.append(list)
 
-#         predicted_close_price = clf.predict(target)[0]
-#         predicted_price.append(predicted_close_price)
-#         open_price_list.append(close_price_list[-1])
-#         close_price_list.append(predicted_close_price)
+        predicted_close_price = clf.predict(target)[0]
+        predicted_price.append(predicted_close_price)
+        open_price_list.append(close_price_list[-1])
+        close_price_list.append(predicted_close_price)
     
-#     return predicted_price
+    return predicted_price
 
-# # # ------------------------------------------------------------------------------------------------------
+# # ------------------------------------------------------------------------------------------------------
 
 
+
+def RSI(prices):
+    # RSI is calculated using a period of 14 days
+    period = 14
+    # Range is one period less than the amount of prices input
+    data_range = len(prices) - period
+    # If there are less than 14 prices, the RSI cannot be calculated, and the system exits
+    if data_range < 0:
+        raise SystemExit
+
+    # Calculates the daily price change
+    price_change = prices[1:] - prices[:-1]
+    # An array of zeros the length of data_range is created
+    rsi = np.zeros(data_range)
+
+    # Creates an array with the price changes
+    gains = np.array(price_change)
+    # Only the positive values will be kept in the gains array
+    negative_gains = gains < 0
+    gains[negative_gains] = 0
+
+    # Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
+    losses = np.array(price_change)
+    positive_gains = gains > 0
+    losses[positive_gains] = 0
+    losses *=-1
+
+    # Calculate the mean of the up days and the down days
+    avg_up = np.mean(gains[:period])
+    avg_down = np.mean(losses[:period])
+
+    if avg_down == 0:
+        rsi[0] = 100
+    else:
+        RS = avg_up/avg_down
+        rsi[0] = 100 - (100/(1+RS))
+
+    for i in range(1,data_range):
+        avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
+                period
+        avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
+                period
+
+        if avg_down == 0:
+            rsi[i] = 100
+        else:
+            RS = avg_up/avg_down
+            rsi[i] = 100 - (100/(1+RS))
+
+    return rsi
+
+def MO():
+	print MO
+	return MO[1]
+
+def search(request,name):
+
+	pred1 = CallBayesian(name,10)
+
+	pred2 = CallNeural(name)
+
+	#pred3 = CallSVM(name,10)
+	pred3 = 4444
+
+	#RSIndex = RSI(dataset)
+	RSIndex = 4444
+
+	#MA = MO()
+	MA = 4444
+	# THIRD INDICATOR
+
+
+	return render(request, 'realtime/search.html',{'name':name, 'pred1':pred1, 'pred2':pred2, 'pred3':pred3, 'RSIndex':RSIndex, 'MA':MA})

@@ -1,17 +1,39 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" style="background-image: url(http://i.imgur.com/Nbi7bYI.jpg);">
+
 <head>
 {% load staticfiles %}
 
-
-<title>PredStocks | Prediction</title>
+<title>PredStocks</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="{% static 'realtime/css/style.css' %}" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="realtime/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="realtime/js/script.js"></script>
-<script type="text/javascript" src="realtime/js/cufon-yui.js"></script>
-<script type="text/javascript" src="realtime/js/arial.js"></script>
-<script type="text/javascript" src="realtime/js/cuf_run.js"></script>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"  href="{% static 'realtime/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/fonts/font-awesome/css/font-awesome.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/css/menusearch.css' %}">
+
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css"  href="{% static 'realtime/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/css/responsive.css' %}">
+
+    <script type="text/javascript" src="{% static 'realtime/js/modernizr.custom.js' %}"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+
+
+
+    <script type="text/javascript" src="{% static 'realtime/js/jquery.1.11.1.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'realtime/js/jquery-1.10.2.min.js' %}"></script>
+
+    <script src="{% static 'realtime/js/handlebars.js' %}"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
 
 
 
@@ -20,6 +42,18 @@
 <body>
 
 <a href="{% url 'pred' %}"> </a>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'realtime/js/jquery.1.11.1.js'%}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="{% static 'realtime/js/bootstrap.js'%}"></script>
+
+    <!-- Javascripts
+    ================================================== -->
+     <script src="{% static 'realtime/js/typeahead.js'%}"></script>
+      <script src="{% static 'realtime/js/search.js'%}"></script>
+
 
     <div class="header">
     <div class="logo">
@@ -35,237 +69,57 @@
       </ul>
     </div>
     <div class="clr"></div>
-    <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="366" alt="" class="fl" />
+    <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="300" alt="" class="fl" />
       
       
     </div>
     <div class="clr"></div>
   </div>
-<div class = "content">  
+
+<div class = "content"> 
+  <img src="https://thelinknewspaper.ca/images/articles/Volume_36/Special/_resized/mediadem.polls.LauraLalonde.gif" width="500" height="180" alt=""/> 
 <div class="sidebar">
       <div class="gadget">
-        <div class="search">
-          <form method="get" id="search" action="#">
-            <span>
-            <input type="text" value="Search..." name="s" id="s" />
-            <input name="searchsubmit" type="image" src="{% static 'realtime/img/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
-      
-            </span>
-          </form>
-          <!--/searchform -->
-          <div class="clr"></div>
-        </div>
-      </div>
-      <div class="gadget">
         <h2 class="star">Trending</h2>
-    <marquee behavior="scroll" direction="down" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"> <a href="https://quotes.wsj.com/html/">Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Device Ma </a> </marquee>
+
+          <script src="http://markets.financialcontent.com/stocks/widget:stockquote_narrow1?Output=JS&Symbol=AMZN"></script>
+
+
+    <marquee behavior="scroll" direction="up" scrollamount="2" onmouseover="this.stop()" onmouseout="this.start()"> Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Devices... </marquee>
+    <br>
+    <br>
 
         <div class="clr"></div>
-        
-      </div>
-      
-</div>
- <form  action="{% url 'passing' %}" method="get" >
-  <div class = "Prediction">
-  <h9> Please Select Company?</h9>
-  </div>
-  
-  <div class = "p1">
-  
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="amazon" checked>
-    Amazon
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="apple">
-    Apple
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios3" value="facebook">
-    Facebook
-  </label>
-</div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios4" value="google">
-    Google
-  </label>
-  </div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios5" value="easports">
-    EAsports
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios6" value="microsoft">
-    Microsoft
-  </label>
-  </div>
-<div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios7" value="walmart">
-    Walmart
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios8" value="yahoo">
-    Yahoo
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios9" value="sony">
-    Sony
-  </label>
-  </div>
-  <div class="radio">
-  <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios10" value="nikon">
-    Nikon
-  </label>
-  </div>
-  
-</div>
-  
- 
- 
- <div class = "Prediction">
- <h9> <label>Select the Prediction  :  </label><select name="predict" id="dur" ></h9>
- </div>
-  
- <div class = "p1">
 
- <p>
-<option value="Short-term">Short-term</option>
-<option value="Intermediate">Intermediate</option>
-<option value="Long-term">Long-term</option>
-</select></p>
-  
-  
-  
-  
-</div>
-
-<div class = "Prediction">
-<input type="submit" id ="send" value="SUBMIT">
-
-</div>
+        <form method="get" action="http://www.google.com/search">
+<input type="text"   name="q" size="25" maxlength="255" value="" />
+<input type="submit" value="Search Web" />
 </form>
-
-  
-    <div class="clr"></div>
-  </div>
-</div>  
- <div class="fbg">
-    <div class="fbg_resize">
-      <div class="col c1">
-        <h2><span>Image Gallery</span></h2>
-        <a href="#"><img src="{% static 'realtime/img/image2.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image3.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image4.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image5.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image6.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image7.jpg' %}" width="58" height="58" alt="" /></a> </div>
-      
-      <div class="col c3">
-        <h2><span>About Us</span></h2>
-    
-        The stock market can be a confusing place for the average investor. But you don't need to be a hedge-fund manager or a billionaire to beat Wall Street at its own game. 
-        We seek to help the ordinary individual investor make intelligent investments by providing information that gives you an edge. 
-        PredStocks uses state of the art software to predict stock prices and generate trading "Buy-Sell" signals that will help you make your decision.</p>
       </div>
-      <div class="clr"></div>
-    </div>
-  </div>
- 
-  <div class="footer">
-    <div class="footer_resize">
-      <p class="lf">&copy; Copyright <a href="#">MyWebSite</a>.</p>
-      <p class="rf">Prediction using Machine Learning </p>
-      <div class="clr"></div>
-    </div>
-  </div>
+
+      
 </div>
-<div align=center>We Predict the Future </div>
+ 
+ 	
+ <div class="form-group col-sm-6 col-sm-offset-1">
+ <h2>Get Your Predictions !</h2>
+      <form align="left" class="" id="search">
+        <input type="text" class="form-control typeahead" placeholder="Search Stock Symbol..." id="typeahead" data-url="{% static 'realtime/data/stock.json' %}" usr-url="" />
+        </form>
+      </div>
+ 
+  <br>
+  <br>
+  <br>
+  <br>
+   <br>
+  <br>
+  <br>
+  <br>
+
+
+    
+<div align=center>Lets Predict the Future </div>
 </body>
 
-<!--<script type="text/javascript">
-    function assign() {
-    
-    var amazon = document.getElementById("optionsRadios1").value;
-    var apple = document.getElementById("optionsRadios2").value;
-    var facebook = document.getElementById("optionsRadios3").value;
-    var google = document.getElementById("optionsRadios4").value;
-    var easports = document.getElementById("optionsRadios5").value;
-    var microsoft = document.getElementById("optionsRadios6").value;
-    var walmart = document.getElementById("optionsRadios7").value;
-    var yahoo = document.getElementById("optionsRadios8").value;
-    var sony = document.getElementById("optionsRadios9").value;
-    var nikon = document.getElementById("optionsRadios10").value;
-    var company;
-    if(document.getElementById("optionsRadios1").checked == true)
-    {
-       company = amazon;
-    }
-    if(document.getElementById("optionsRadios2").checked == true)
-    {
-       company = apple;
-    }
-    if(document.getElementById("optionsRadios3").checked == true)
-    {
-       company = facebook;
-    }
-    if(document.getElementById("optionsRadios4").checked == true)
-    {
-       company = google;
-    }
-    if(document.getElementById("optionsRadios5").checked == true)
-    {
-       company = easports;
-    }
-    if(document.getElementById("optionsRadios6").checked == true)
-    {
-       company = microsoft;
-    }
-    if(document.getElementById("optionsRadios7").checked == true)
-    {
-       company = walmart;
-    }
-    if(document.getElementById("optionsRadios8").checked == true)
-    {
-       company = yahoo;
-    }
-    if(document.getElementById("optionsRadios9").checked == true)
-    {
-       company = sony;
-    }
-    if(document.getElementById("optionsRadios10").checked == true)
-    {
-       company = nikon;
-    }
-    
-    var time_period = document.getElementById("dur");
-    var e = time_period.options[time_period.selectedIndex].value;
-    $(document).on('submit','#company_name',function(e)
-    {
-      $.ajax({
-      type:"POST",
-      url:"/realtime/tejas/",
-      data:{
-      company: company,
-      duration: e,
-      
-      csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-    },
-    success:function(){
-    }
-    });
-      
-    });
-    }
-    
-</script>-->
 </html>

@@ -1,11 +1,82 @@
-<!DOCTYPE HTML>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="background-image: url(http://i.imgur.com/Nbi7bYI.jpg);">
+
 <HTML>
+
 <HEAD>
-<a href="{% url 'search' %}"> </a>
-<TITLE>Search</TITLE>
+{% load staticfiles %}
+
+	<TITLE>{{name}}</TITLE>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="{% static 'realtime/css/style.css' %}" rel="stylesheet" type="text/css" />	
+
 </HEAD>
+
 <BODY>
-<p>Hello</p>
-{{name}}
+
+	<div class="header">
+    	<div class="logo">
+     		<h1><a href="#"><span>Pred</span>Stocks<br><small>One stop solution to smart prediction !</small></a></h1>
+    	</div>
+	    <div class="menu_nav">
+	      <ul>
+	        <li><a href="index.html">Home</a></li>
+	       <li class="active"><a href="prediction.html">Prediction</a></li>
+	        
+	        <li><a href="news.html">News</a></li>
+	        <li><a href="contact.html">Contact Us</a></li>
+	      </ul>
+	    </div>
+    </div>
+
+   <div class="clr"></div>
+    <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="200" alt="" class="fl" />
+
+    <div class="footer">
+	    <div class="footer_resize">
+	      <p class="lf">&copy; Copyright <a href="#">PredStocks</a>.</p>
+	      
+	      
+	    </div>
+  	</div>
+
+  	<h1> Predictions </h1>
+  	
+  	<br>
+  	<br>
+
+  	<h2> Bayesian Method : {{ pred1 }} </h2>
+
+  	<br>
+  	<br>
+
+
+  	<h2> Artificial Neural Network : {{ pred2 }} </h2>
+
+  	<br>
+  	<br>
+
+  	<h2> Support Vector Machine : {{ pred3 }} </h2>
+
+  	<br>
+  	<br>
+
+
+    <h2> Relative Strength Index : {{ RSIndex }} </h2>
+
+    <br>
+    <br>
+
+    <h2> Moving Average : {{ MA }} </h2>
+
+    <br>
+    <br>
+
+   <h2> THIRD INDICATOR : ??? </h2>
+
+    <br>
+    <br>
+
 </BODY>
 </HTML>
