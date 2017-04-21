@@ -46,7 +46,7 @@
             <span>
             <input type="text" value="Search..." name="s" id="s" />
             <input name="searchsubmit" type="image" src="{% static 'realtime/img/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
-			
+      
             </span>
           </form>
           <!--/searchform -->
@@ -55,7 +55,7 @@
       </div>
       <div class="gadget">
         <h2 class="star">Trending</h2>
-		<marquee behavior="scroll" direction="down" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"> <a href="https://quotes.wsj.com/html/">Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Device Ma </a> </marquee>
+    <marquee behavior="scroll" direction="down" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"> <a href="https://quotes.wsj.com/html/">Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Device Ma </a> </marquee>
 
         <div class="clr"></div>
         
@@ -76,10 +76,11 @@
  <br> </br>
  <left><label><font size ="5"><font color = "Black">Stock Prediction:</label><input type="text" id="price" name="price" size="10" maxlength="10" /><br /></font> </left>
  
-{% for c in pred%}
-	{{ pred }}
-	
-{% endfor %}
+
+
+  {{ pred }}
+  
+
   <p>
  </p>
  <p>
@@ -98,7 +99,7 @@
  </p>
 
 
-	
+  
     <div class="clr"></div>
   </div>
 </div> </body>
