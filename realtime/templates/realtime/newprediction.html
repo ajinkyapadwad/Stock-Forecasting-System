@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+{% load staticfiles %}
+
+	<title>PredStocks | Prediction</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="{% static 'realtime/css/style.css' %}" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="realtime/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="realtime/js/script.js"></script>
+	<script type="text/javascript" src="realtime/js/cufon-yui.js"></script>
+	<script type="text/javascript" src="realtime/js/arial.js"></script>
+	<script type="text/javascript" src="realtime/js/cuf_run.js"></script>
+
+</head>
+
+<body>
+
+<a href="{% url 'newprediction' %}"> </a>
+
+    <div class="header">
+    <div class="logo">
+      <h1><a href="#"><span>Pred</span>Stocks<br><small>One stop solution to smart prediction !</small></a></h1>
+    </div>
+    <div class="menu_nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li class="active"><a href="prediction.html">Prediction</a></li>
+        
+        <li ><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="clr"></div>
+    <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="366" alt="" class="fl" />
+      
+      
+    </div>
+    <div class="clr"></div>
+  </div>
+
+
+	{% block content%}
+		<p> Whats up ! </p>
+		{% for c in content%}
+			<p> {{ c }} </p>
+		{% endfor%}	
+	{% endblock %}
+</body>
