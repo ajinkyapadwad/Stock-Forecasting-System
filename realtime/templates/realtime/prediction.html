@@ -13,45 +13,13 @@
 <script type="text/javascript" src="realtime/js/arial.js"></script>
 <script type="text/javascript" src="realtime/js/cuf_run.js"></script>
 
-<<<<<<< HEAD
-<!-- new one here -->
 
- <link rel="stylesheet" type="text/css"  href="/static/css/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/responsive.css">
-
-    <script type="text/javascript" src="/static/js/modernizr.custom.js"></script>
-
-    <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
-
-
-
-    <script type="text/javascript" src="/static/js/jquery.1.11.1.js"></script>
-
-    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
-
-    <script src="/static/js/handlebars.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-=======
-
->>>>>>> 3722954c2614e95daeb31e1f2153515b1f2be3c9
 
 
 </head>
 <body>
 
-<<<<<<< HEAD
-<form action="/newform/" method="post">
-    <label for="newform">Your name: </label>
-    <input id="newform" type="text" name="newform" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form>
-
-
-<a href="{% url 'prediction' %}"> </a>
-=======
 <a href="{% url 'pred' %}"> </a>
->>>>>>> 3722954c2614e95daeb31e1f2153515b1f2be3c9
 
     <div class="header">
     <div class="logo">
@@ -62,7 +30,7 @@
         <li><a href="index.html">Home</a></li>
         <li class="active"><a href="prediction.html">Prediction</a></li>
         
-        <li ><a href="blog.html">News</a></li>
+        <li ><a href="news.html">News</a></li>
         <li><a href="contact.html">Contact Us</a></li>
       </ul>
     </div>
@@ -81,7 +49,7 @@
             <span>
             <input type="text" value="Search..." name="s" id="s" />
             <input name="searchsubmit" type="image" src="{% static 'realtime/img/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
-			
+      
             </span>
           </form>
           <!--/searchform -->
@@ -90,48 +58,14 @@
       </div>
       <div class="gadget">
         <h2 class="star">Trending</h2>
-		<marquee behavior="scroll" direction="down" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"> <a href="https://quotes.wsj.com/html/">Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Device Ma </a> </marquee>
+    <marquee behavior="scroll" direction="down" scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()"> <a href="https://quotes.wsj.com/html/">Amazon Makes the High-Performance 7-Mic Voice Processing Technology from Amazon Echo Available to Third-Party Device Ma </a> </marquee>
 
         <div class="clr"></div>
         
       </div>
       
 </div>
-<<<<<<< HEAD
-
- </br>
-    </br>
-    <div class="container ">
-
-      <div class="form-group col-sm-4 col-sm-offset-4">
-      <form class="" id="search">
-        <input type="text" class="form-control typeahead" placeholder="Search Stock Information" id="typeahead" data-url="/static/data/stock.json" usr-url="" />
-        </form>
-      </div>
-    </div>
-
-    </br>
-    </br>
-    
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.1.11.1.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript" src="/static/js/bootstrap.js"></script>
-
-    <!-- Javascripts
-    ================================================== -->
-     <script src="/static/js/typeahead.js"></script>
-      <script src="/static/js/search.js"></script>
-  </body>
-</script>
-
-
-<!--  <form method="POST">
-=======
  <form  action="{% url 'passing' %}" method="get" >
->>>>>>> 3722954c2614e95daeb31e1f2153515b1f2be3c9
   <div class = "Prediction">
   <h9> Please Select Company?</h9>
   </div>
@@ -140,71 +74,67 @@
   
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="Amazon" checked>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="amazon" checked>
     Amazon
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="Apple">
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="apple">
     Apple
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios3" value="Facebook">
+    <input type="radio" name="optionsRadios" id="optionsRadios3" value="facebook">
     Facebook
   </label>
 </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios4" value="Google">
+    <input type="radio" name="optionsRadios" id="optionsRadios4" value="google">
     Google
   </label>
   </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios5" value="EAsports">
+    <input type="radio" name="optionsRadios" id="optionsRadios5" value="easports">
     EAsports
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios6" value="Microsoft">
+    <input type="radio" name="optionsRadios" id="optionsRadios6" value="microsoft">
     Microsoft
   </label>
   </div>
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios7" value="Walmart">
+    <input type="radio" name="optionsRadios" id="optionsRadios7" value="walmart">
     Walmart
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios8" value="Yahoo">
+    <input type="radio" name="optionsRadios" id="optionsRadios8" value="yahoo">
     Yahoo
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios9" value="Sony">
+    <input type="radio" name="optionsRadios" id="optionsRadios9" value="sony">
     Sony
   </label>
   </div>
   <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios10" value="Nikon">
+    <input type="radio" name="optionsRadios" id="optionsRadios10" value="nikon">
     Nikon
   </label>
   </div>
   
 </div>
-<<<<<<< HEAD
- </form>  -->
-=======
   
->>>>>>> 3722954c2614e95daeb31e1f2153515b1f2be3c9
  
  
  <div class = "Prediction">
@@ -230,7 +160,7 @@
 </div>
 </form>
 
-	
+  
     <div class="clr"></div>
   </div>
 </div>  
@@ -242,7 +172,7 @@
       
       <div class="col c3">
         <h2><span>About Us</span></h2>
-		
+    
         The stock market can be a confusing place for the average investor. But you don't need to be a hedge-fund manager or a billionaire to beat Wall Street at its own game. 
         We seek to help the ordinary individual investor make intelligent investments by providing information that gives you an edge. 
         PredStocks uses state of the art software to predict stock prices and generate trading "Buy-Sell" signals that will help you make your decision.</p>
@@ -263,81 +193,79 @@
 </body>
 
 <!--<script type="text/javascript">
-
-		function assign() {
-		
-		var amazon = document.getElementById("optionsRadios1").value;
-		var apple = document.getElementById("optionsRadios2").value;
-		var facebook = document.getElementById("optionsRadios3").value;
-		var google = document.getElementById("optionsRadios4").value;
-		var easports = document.getElementById("optionsRadios5").value;
-		var microsoft = document.getElementById("optionsRadios6").value;
-		var walmart = document.getElementById("optionsRadios7").value;
-		var yahoo = document.getElementById("optionsRadios8").value;
-		var sony = document.getElementById("optionsRadios9").value;
-		var nikon = document.getElementById("optionsRadios10").value;
-		var company;
-		if(document.getElementById("optionsRadios1").checked == true)
-		{
-			 company = amazon;
-		}
-		if(document.getElementById("optionsRadios2").checked == true)
-		{
-			 company = apple;
-		}
-		if(document.getElementById("optionsRadios3").checked == true)
-		{
-			 company = facebook;
-		}
-		if(document.getElementById("optionsRadios4").checked == true)
-		{
-			 company = google;
-		}
-		if(document.getElementById("optionsRadios5").checked == true)
-		{
-			 company = easports;
-		}
-		if(document.getElementById("optionsRadios6").checked == true)
-		{
-			 company = microsoft;
-		}
-		if(document.getElementById("optionsRadios7").checked == true)
-		{
-			 company = walmart;
-		}
-		if(document.getElementById("optionsRadios8").checked == true)
-		{
-			 company = yahoo;
-		}
-		if(document.getElementById("optionsRadios9").checked == true)
-		{
-			 company = sony;
-		}
-		if(document.getElementById("optionsRadios10").checked == true)
-		{
-			 company = nikon;
-		}
-		
-		var time_period = document.getElementById("dur");
-		var e = time_period.options[time_period.selectedIndex].value;
-
-		$(document).on('submit','#company_name',function(e)
-		{
-			$.ajax({
-			type:"POST",
-			url:"/realtime/tejas/",
-			data:{
-			company: company,
-			duration: e,
-			
-			csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-		},
-		success:function(){
-		}
-		});
-			
-		});
-		}
-		
+    function assign() {
+    
+    var amazon = document.getElementById("optionsRadios1").value;
+    var apple = document.getElementById("optionsRadios2").value;
+    var facebook = document.getElementById("optionsRadios3").value;
+    var google = document.getElementById("optionsRadios4").value;
+    var easports = document.getElementById("optionsRadios5").value;
+    var microsoft = document.getElementById("optionsRadios6").value;
+    var walmart = document.getElementById("optionsRadios7").value;
+    var yahoo = document.getElementById("optionsRadios8").value;
+    var sony = document.getElementById("optionsRadios9").value;
+    var nikon = document.getElementById("optionsRadios10").value;
+    var company;
+    if(document.getElementById("optionsRadios1").checked == true)
+    {
+       company = amazon;
+    }
+    if(document.getElementById("optionsRadios2").checked == true)
+    {
+       company = apple;
+    }
+    if(document.getElementById("optionsRadios3").checked == true)
+    {
+       company = facebook;
+    }
+    if(document.getElementById("optionsRadios4").checked == true)
+    {
+       company = google;
+    }
+    if(document.getElementById("optionsRadios5").checked == true)
+    {
+       company = easports;
+    }
+    if(document.getElementById("optionsRadios6").checked == true)
+    {
+       company = microsoft;
+    }
+    if(document.getElementById("optionsRadios7").checked == true)
+    {
+       company = walmart;
+    }
+    if(document.getElementById("optionsRadios8").checked == true)
+    {
+       company = yahoo;
+    }
+    if(document.getElementById("optionsRadios9").checked == true)
+    {
+       company = sony;
+    }
+    if(document.getElementById("optionsRadios10").checked == true)
+    {
+       company = nikon;
+    }
+    
+    var time_period = document.getElementById("dur");
+    var e = time_period.options[time_period.selectedIndex].value;
+    $(document).on('submit','#company_name',function(e)
+    {
+      $.ajax({
+      type:"POST",
+      url:"/realtime/tejas/",
+      data:{
+      company: company,
+      duration: e,
+      
+      csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+    },
+    success:function(){
+    }
+    });
+      
+    });
+    }
+    
 </script>-->
 </html>

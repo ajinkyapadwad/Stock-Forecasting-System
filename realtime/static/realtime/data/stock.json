@@ -1,0 +1,72 @@
+[
+    {
+        "name": "GOOG   Alphabet Inc", 
+        "slug": "goog"
+    }, 
+    {
+        "name": "AAPL   Apple Inc.", 
+        "slug": "aapl"
+    },
+    {
+        "name": "fb     Facebook", 
+        "slug": "fb"
+    },
+    {
+        "name": "CSCO   Cisco", 
+        "slug": "csco"
+    },
+    {
+        "name": "CRM   Salesforce", 
+        "slug": "crm"
+    },
+    {
+        "name": "YHOO   Yahoo", 
+        "slug": "yhoo"
+    },
+    {
+        "name": "AMZN   Amazon", 
+        "slug": "amzn"
+    },
+    {
+        "name": "INTL   Intel", 
+        "slug": "intl"
+    },
+    {
+        "name": "BAC   Bank of America", 
+        "slug": "bac"
+    },
+    {
+        "name": "TSLA   Tesla", 
+        "slug": "tsla"
+    },
+    {
+        "name": "BCS   Barclays", 
+        "slug": "bcs"
+    },
+    {
+        "name": "IBM", 
+        "slug": "ibm"
+    },
+    {
+        "name": "GS  Goldman Sachs", 
+        "slug": "gs"
+    },
+    {
+        "name": "C   Citigroup", 
+        "slug": "c"
+    },
+    {
+        "name": "GE   General Electric", 
+        "slug": "ge"
+    },
+    {
+        "name": "JNJ   Johnson & Johnson", 
+        "slug": "jnj"
+    },
+    {
+        "name": "GM   General Motors Company", 
+        "slug": "gm"
+    }
+]
+
+

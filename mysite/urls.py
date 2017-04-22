@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from realtime import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^realtime/', include('realtime.urls')),
+    #url( r'^search/(?P<name>[a-zA-Z0-9_.-]+)/$', 'realtime.views.search', name='search_stock' ),
 	
 ]
