@@ -11,6 +11,10 @@ from django.http import HttpResponseRedirect
 
 from django.template import RequestContext
 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from pandas import Series, DataFrame
 
 
 import MySQLdb                      #import SQL DB library
@@ -261,7 +265,7 @@ def bayesian(data,days):
 	final.append(per)
 	
 	return mean
-
+dataset=[]
 def query(name,days):
 	print(name)
 	data=[]
@@ -291,25 +295,128 @@ def query(name,days):
 	for row in results:
 		data.append(row[0])
 	#print ('price', results)
-
+        dataset = data
 	prediction = bayesian(data,days)
 
 	# print ("FINAL PREDICTION BAYESIAN : ", prediction)
 	return prediction
-
+ticker="";
 def passing(request):
 	options=request.GET.get('optionsRadios')
 	duration = request.GET.get('duration')
 	# print options
 	# print dur
-	pred = query(options,duration)
-	pred2 = analyzeSymbol(options)
+	#pred = query(options,duration)
+	#pred2 = analyzeSymbol(options)
 	# pred = svm(options,10)
 	# pred = 1234
+	ticker = options
 	pred2 = 1234
+	R = RSI(dataset,ticker)
+        print R
 	return render(request,'realtime/prediction2_new.html',{'pred':pred, 'pred2':pred2}) 
 
 # ----------------------------------------------------------------------------
+
+
+
+def RSI(prices, ticker):
+    # RSI is calculated using a period of 14 days
+    period = 14
+    # Range is one period less than the amount of prices input
+    data_range = len(prices) - period
+    # If there are less than 14 prices, the RSI cannot be calculated, and the system exits
+    if data_range < 0:
+        raise SystemExit
+
+    # Calculates the daily price change
+    price_change = prices[1:] - prices[:-1]
+    # An array of zeros the length of data_range is created
+    rsi = np.zeros(data_range)
+
+    # Creates an array with the price changes
+    gains = np.array(price_change)
+    # Only the positive values will be kept in the gains array
+    negative_gains = gains < 0
+    gains[negative_gains] = 0
+
+    # Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
+    losses = np.array(price_change)
+    positive_gains = gains > 0
+    losses[positive_gains] = 0
+    losses *=-1
+
+    # Calculate the mean of the up days and the down days
+    avg_up = np.mean(gains[:period])
+    avg_down = np.mean(losses[:period])
+
+    if avg_down == 0:
+        rsi[0] = 100
+    else:
+        RS = avg_up/avg_down
+        rsi[0] = 100 - (100/(1+RS))
+
+    for i in range(1,data_range):
+        avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
+                period
+        avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
+                period
+
+        if avg_down == 0:
+            rsi[i] = 100
+        else:
+            RS = avg_up/avg_down
+            rsi[i] = 100 - (100/(1+RS))
+
+    return rsi
+'''
+# INPUTS
+stock_ticker = ticker
+# range (D/M/Y) : 1/1/2009 to 26/1/2014
+# start date:
+start_month = 1 # minus 1
+start_day = 1
+start_year = 2016
+# start tags
+sm_tag = "&a="+str(start_month)
+sd_tag = "&b="+str(start_day)
+sy_tag = "&c="+str(start_year)
+sfinal_tag = sm_tag + sd_tag + sy_tag
+
+# end date:
+end_month = 12 # minus 1
+end_day = 1
+end_year = 2016
+# end tags
+e_tag = "&d="+str(end_month)
+e_tag = "&e="+str(end_day)
+e_tag = "&f="+str(end_year)
+efinal_tag = e_tag + e_tag + e_tag
+# interval tag: d: daily w: weekly m: monthly
+i_tag = "&g=d"
+
+final_tag = sfinal_tag + efinal_tag + i_tag
+
+#base_url = "http://ichart.yahoo.com/table.csv?s="
+
+#url = base_url + stock_ticker + final_tag + "&ignore=.csv"
+
+# Read the csv file and place it into a dataframe called table
+frame = pd.read_csv(url, delimiter = ",")
+table = pd.DataFrame(frame)
+print stock_ticker
+
+start = 1
+end = 500
+# Grab the closing prices for the specified range
+prices = table[start:end].Close
+# Convert prices to an array for input into the RSI function
+data = np.array(prices)
+# Calculate and print RSI values
+
+'''
+
+
 
 # -----------------------  NEURAL NETWORK ---------------------------------------
 
