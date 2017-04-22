@@ -187,8 +187,8 @@ def HistoricalStocks():
 			db2.commit()    # commit all the changes
 
 # Call the two functions
-# RealTimeStocks()
-# HistoricalStocks()
+#RealTimeStocks()
+#HistoricalStocks()
 
 # close databases
 # db.close()
@@ -200,10 +200,10 @@ def HistoricalStocks():
 
 
 
-def bayesian(data):
+def bayesian(data,days):
 	x_10 =[]
 	t_data = []
-	for i in range(len(data) - 90, len(data)):
+	for i in range(len(data) - (100 - int(days)), len(data)):
 		t_data.append(data[i])
 	for i in range(1, 11):
 		x_10.append(i)
@@ -262,7 +262,7 @@ def bayesian(data):
 	
 	return mean
 
-def query(name):
+def query(name,days):
 	print(name)
 	data=[]
 	if name in ('amazon'):
@@ -292,24 +292,22 @@ def query(name):
 		data.append(row[0])
 	#print ('price', results)
 
-	#prediction = bayesian(data)
-	#prediction = 
-	print ("FINAL PREDICTION BAYESIAN : ", prediction)
+	prediction = bayesian(data,days)
+
+	# print ("FINAL PREDICTION BAYESIAN : ", prediction)
 	return prediction
 
 def passing(request):
 	options=request.GET.get('optionsRadios')
-	dur = request.GET.get('predict')
+	duration = request.GET.get('duration')
 	# print options
 	# print dur
-	#pred = query(options)
-	#pred = analyzeSymbol(options)
-	#pred = svm(optionsRadios,10)
-	return render(request,'realtime/prediction2_new.html',{'pred':pred}) 
-
-
-
-
+	pred = query(options,duration)
+	pred2 = analyzeSymbol(options)
+	# pred = svm(options,10)
+	# pred = 1234
+	pred2 = 1234
+	return render(request,'realtime/prediction2_new.html',{'pred':pred, 'pred2':pred2}) 
 
 # ----------------------------------------------------------------------------
 
@@ -322,8 +320,6 @@ import urllib2
 
 
 random.seed(0)
-
-## ================================================================
 
 # calculate a random number a <= rand < b
 def rand(a, b):
@@ -343,7 +339,6 @@ def sigmoid(x):
 def dsigmoid(y):
 	return 1.0 - y**2
 
-## ================================================================
 
 class NeuralNetwork:
 	def __init__(self, inputNodes, hiddenNodes, outputNodes):
@@ -442,11 +437,11 @@ class NeuralNetwork:
 		return self.update(inputNodes)[0]
 
 	def weights(self):
-		print('Input weights:')
+		#print('Input weights:')
 		for i in range(self.inputNodes):
 			print(self.inputWeight[i])
 		print()
-		print('Output weights:')
+		#print('Output weights:')
 		for j in range(self.hiddenNodes):
 			print(self.outputWeight[j])
 
@@ -462,8 +457,7 @@ class NeuralNetwork:
 			if i % 100 == 0:
 				print('error %-.5f' % error)
 
-
-	   
+   
 def normalizePrice(price, minimum, maximum):
 	return ((2*price - (maximum + minimum)) / (maximum - minimum))
 
@@ -550,7 +544,7 @@ def getTrainingData(stockSymbol):
 	del historicalData[9:]
 
 	# get five 5-day moving averages, 5-day lows, and 5-day highs, associated with the closing price
-	trainingData = getTimeSeriesValues(historicalData, 5)
+	trainingData = getTimeSeriesValues(historicalData,5)
 
 	return trainingData
 
@@ -621,73 +615,73 @@ def analyzeSymbol(stockSymbol):
 
 # # ---------------------------------- SUPPORT VECTOR MACHINE -----------------------------------------------
 
-# import scipy
-# from scipy.stats import norm
-# from sklearn.svm import SVR, SVC, LinearSVC
+import scipy
+from scipy.stats import norm
+from sklearn.svm import SVR, SVC, LinearSVC
 
-# def svm(name, day):
-#     '''
-#     Input: Name of the stock, How many days of after current day to get predicted price
-#     Output: Predicted Price for next n days
-#     '''
-#     data = gethistorical(name)
-#     data = data[::-1]
-#     open_price_list = []
-#     close_price_list = []
-#     predicted_price=[]
-#     for i in xrange(len(data)):
-#         open_price_list.append(data[i][1])
-#         close_price_list.append(data[i][2])
-#     for iterations in range(day):
-#         close_price_dataset=[]
-#         open_price_dataset=[]
-#         previous_ten_day_close_price_dataset=[]
-#         g=0
-#         h=50
-#         while h<len(close_price_list):
-#             previous_ten_day_close_price_dataset.append(close_price_list[g:h])
-#             open_price_dataset.append(open_price_list[h])
-#             close_price_dataset.append(close_price_list[h])
-#             g += 1
-#             h += 1
-#         moving_average_dataset=[]
-#         for x in previous_ten_day_close_price_dataset:
-#             i=0
-#             for y in x:
-#                 i=i+y
-#             moving_average_dataset.append(i/10)
-#         feature_dataset = []
-#         for j in range(len(close_price_dataset)):
-#             list = []
-#             list.append(moving_average_dataset[j])
-#             list.append(open_price_dataset[j])
-#             feature_dataset.append(list)
-#         feature_dataset = numpy.array(feature_dataset)        
-#         close_price_dataset = numpy.array(close_price_dataset)
-#         clf = SVR(kernel='linear',degree=1)
-#         clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
-#         target = []
-#         if iterations==0:
-#             url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
-#             stock_info = Share(name)
-#             list = []
-#             list.append(stock_info.get_open())
-#             list.append(stock_info.get_50day_moving_avg())
-#             target.append(list)
+def svm(name, day):
+    '''
+    Input: Name of the stock, How many days of after current day to get predicted price
+    Output: Predicted Price for next n days
+    '''
+    data = getHistoricalData(name)
+    data = data[::-1]
+    open_price_list = []
+    close_price_list = []
+    predicted_price=[]
+    for i in xrange(len(data)):
+        open_price_list.append(data[i][1])
+        close_price_list.append(data[i][2])
+    for iterations in range(day):
+        close_price_dataset=[]
+        open_price_dataset=[]
+        previous_ten_day_close_price_dataset=[]
+        g=0
+        h=50
+        while h<len(close_price_list):
+            previous_ten_day_close_price_dataset.append(close_price_list[g:h])
+            open_price_dataset.append(open_price_list[h])
+            close_price_dataset.append(close_price_list[h])
+            g += 1
+            h += 1
+        moving_average_dataset=[]
+        for x in previous_ten_day_close_price_dataset:
+            i=0
+            for y in x:
+                i=i+y
+            moving_average_dataset.append(i/10)
+        feature_dataset = []
+        for j in range(len(close_price_dataset)):
+            list = []
+            list.append(moving_average_dataset[j])
+            list.append(open_price_dataset[j])
+            feature_dataset.append(list)
+        feature_dataset = numpy.array(feature_dataset)        
+        close_price_dataset = numpy.array(close_price_dataset)
+        clf = SVR(kernel='linear',degree=1)
+        clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
+        target = []
+        if iterations==0:
+            url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
+            stock_info = Share(name)
+            list = []
+            list.append(stock_info.get_open())
+            list.append(stock_info.get_50day_moving_avg())
+            target.append(list)
             
-#         else:
-#             list = []
-#             list.append(moving_average_dataset[-1])
-#             list.append(open_price_dataset[-1])
-#             target.append(list)
+        else:
+            list = []
+            list.append(moving_average_dataset[-1])
+            list.append(open_price_dataset[-1])
+            target.append(list)
 
-#         predicted_close_price = clf.predict(target)[0]
-#         predicted_price.append(predicted_close_price)
-#         open_price_list.append(close_price_list[-1])
-#         close_price_list.append(predicted_close_price)
+        predicted_close_price = clf.predict(target)[0]
+        predicted_price.append(predicted_close_price)
+        open_price_list.append(close_price_list[-1])
+        close_price_list.append(predicted_close_price)
     
-#     return predicted_price
+    return predicted_price
 
-# # # ------------------------------------------------------------------------------------------------------
+# # ------------------------------------------------------------------------------------------------------
 
 
