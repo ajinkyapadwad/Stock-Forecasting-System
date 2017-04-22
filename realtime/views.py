@@ -11,12 +11,6 @@ from django.http import HttpResponseRedirect
 
 from django.template import RequestContext
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from pandas import Series, DataFrame
-
-
 import MySQLdb                      #import SQL DB library
 import datetime                     #import date time library
 from yahoo_finance import Share     #import yahoo finance library
@@ -36,10 +30,8 @@ def news(request):
 def contact(request):
 	return render(request, 'realtime/contact.html') 
 
-def search(request,name):
-	return render(request, 'realtime/search.html',{'name':name})
 
-
+	
 # # ------------------------------------------------------------
 
 # # ----------------------- REALTIME / HISTORICAL  DATA LOGGING----------------------------
@@ -204,7 +196,7 @@ def HistoricalStocks():
 
 
 
-def bayesian(data,days):
+def Bayesian(data,days):
 	x_10 =[]
 	t_data = []
 	for i in range(len(data) - (100 - int(days)), len(data)):
@@ -265,29 +257,30 @@ def bayesian(data,days):
 	final.append(per)
 	
 	return mean
+
 dataset=[]
-def query(name,days):
+def CallBayesian(name,days):
 	print(name)
 	data=[]
-	if name in ('amazon'):
+	if name in ('amzn'):
 		sql = "SELECT price FROM Amazon"
-	elif name in ('apple'):
+	elif name in ('aapl'):
 		sql = "SELECT price FROM Apple"
-	elif name in ('facebook'):
+	elif name in ('fb'):
 		sql = "SELECT price FROM Facebook"
-	elif name in ('google'):
+	elif name in ('goog'):
 		sql = "SELECT price FROM Google"
-	elif name in ('easports'):
+	elif name in ('ea'):
 		sql = "SELECT price FROM EAsports"
-	elif name in ('microsoft'):
+	elif name in ('msft'):
 		sql = "SELECT price FROM Microsoft"
-	elif name in ('walmart'):
+	elif name in ('wmt'):
 		sql = "SELECT price FROM Walmart"
-	elif name in ('yahoo'):
+	elif name in ('yhoo'):
 		sql = "SELECT price FROM Yahoo"
-	elif name in ('sony'):
+	elif name in ('sne'):
 		sql = "SELECT price FROM Sony"
-	elif name in ('nikon'):
+	elif name in ('ninoy'):
 		sql = "SELECT price FROM Nikon"
 
 	cursor2.execute(sql)
@@ -295,128 +288,13 @@ def query(name,days):
 	for row in results:
 		data.append(row[0])
 	#print ('price', results)
-        dataset = data
-	prediction = bayesian(data,days)
+	dataset = data
+	prediction = Bayesian(data,days)
 
 	# print ("FINAL PREDICTION BAYESIAN : ", prediction)
 	return prediction
-ticker="";
-def passing(request):
-	options=request.GET.get('optionsRadios')
-	duration = request.GET.get('duration')
-	# print options
-	# print dur
-	#pred = query(options,duration)
-	#pred2 = analyzeSymbol(options)
-	# pred = svm(options,10)
-	# pred = 1234
-	ticker = options
-	pred2 = 1234
-	R = RSI(dataset,ticker)
-        print R
-	return render(request,'realtime/prediction2_new.html',{'pred':pred, 'pred2':pred2}) 
 
 # ----------------------------------------------------------------------------
-
-
-
-def RSI(prices, ticker):
-    # RSI is calculated using a period of 14 days
-    period = 14
-    # Range is one period less than the amount of prices input
-    data_range = len(prices) - period
-    # If there are less than 14 prices, the RSI cannot be calculated, and the system exits
-    if data_range < 0:
-        raise SystemExit
-
-    # Calculates the daily price change
-    price_change = prices[1:] - prices[:-1]
-    # An array of zeros the length of data_range is created
-    rsi = np.zeros(data_range)
-
-    # Creates an array with the price changes
-    gains = np.array(price_change)
-    # Only the positive values will be kept in the gains array
-    negative_gains = gains < 0
-    gains[negative_gains] = 0
-
-    # Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
-    losses = np.array(price_change)
-    positive_gains = gains > 0
-    losses[positive_gains] = 0
-    losses *=-1
-
-    # Calculate the mean of the up days and the down days
-    avg_up = np.mean(gains[:period])
-    avg_down = np.mean(losses[:period])
-
-    if avg_down == 0:
-        rsi[0] = 100
-    else:
-        RS = avg_up/avg_down
-        rsi[0] = 100 - (100/(1+RS))
-
-    for i in range(1,data_range):
-        avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
-                period
-        avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
-                period
-
-        if avg_down == 0:
-            rsi[i] = 100
-        else:
-            RS = avg_up/avg_down
-            rsi[i] = 100 - (100/(1+RS))
-
-    return rsi
-'''
-# INPUTS
-stock_ticker = ticker
-# range (D/M/Y) : 1/1/2009 to 26/1/2014
-# start date:
-start_month = 1 # minus 1
-start_day = 1
-start_year = 2016
-# start tags
-sm_tag = "&a="+str(start_month)
-sd_tag = "&b="+str(start_day)
-sy_tag = "&c="+str(start_year)
-sfinal_tag = sm_tag + sd_tag + sy_tag
-
-# end date:
-end_month = 12 # minus 1
-end_day = 1
-end_year = 2016
-# end tags
-e_tag = "&d="+str(end_month)
-e_tag = "&e="+str(end_day)
-e_tag = "&f="+str(end_year)
-efinal_tag = e_tag + e_tag + e_tag
-# interval tag: d: daily w: weekly m: monthly
-i_tag = "&g=d"
-
-final_tag = sfinal_tag + efinal_tag + i_tag
-
-#base_url = "http://ichart.yahoo.com/table.csv?s="
-
-#url = base_url + stock_ticker + final_tag + "&ignore=.csv"
-
-# Read the csv file and place it into a dataframe called table
-frame = pd.read_csv(url, delimiter = ",")
-table = pd.DataFrame(frame)
-print stock_ticker
-
-start = 1
-end = 500
-# Grab the closing prices for the specified range
-prices = table[start:end].Close
-# Convert prices to an array for input into the RSI function
-data = np.array(prices)
-# Calculate and print RSI values
-
-'''
-
-
 
 # -----------------------  NEURAL NETWORK ---------------------------------------
 
@@ -582,12 +460,14 @@ def rollingWindow(seq, windowSize):
 		win[-1] = e
 		yield win
 
+MO = []
 def getMovingAverage(values, windowSize):
 	movingAverages = []
 	
 	for w in rollingWindow(values, windowSize):
 		movingAverages.append(sum(w)/len(w))
 
+	MO = movingAverages
 	return movingAverages
 
 def getMinimums(values, windowSize):
@@ -670,7 +550,7 @@ def getPredictionData(stockSymbol):
 	return predictionData
 
 
-def analyzeSymbol(stockSymbol):
+def CallNeural(stockSymbol):
 	if stockSymbol in ('amazon'):
 		stockSymbol = "AMZN"
 	if stockSymbol in ('yahoo'):
@@ -726,7 +606,7 @@ import scipy
 from scipy.stats import norm
 from sklearn.svm import SVR, SVC, LinearSVC
 
-def svm(name, day):
+def CallSVM(name, day):
     '''
     Input: Name of the stock, How many days of after current day to get predicted price
     Output: Predicted Price for next n days
@@ -792,3 +672,76 @@ def svm(name, day):
 # # ------------------------------------------------------------------------------------------------------
 
 
+
+def RSI(prices):
+    # RSI is calculated using a period of 14 days
+    period = 14
+    # Range is one period less than the amount of prices input
+    data_range = len(prices) - period
+    # If there are less than 14 prices, the RSI cannot be calculated, and the system exits
+    if data_range < 0:
+        raise SystemExit
+
+    # Calculates the daily price change
+    price_change = prices[1:] - prices[:-1]
+    # An array of zeros the length of data_range is created
+    rsi = np.zeros(data_range)
+
+    # Creates an array with the price changes
+    gains = np.array(price_change)
+    # Only the positive values will be kept in the gains array
+    negative_gains = gains < 0
+    gains[negative_gains] = 0
+
+    # Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
+    losses = np.array(price_change)
+    positive_gains = gains > 0
+    losses[positive_gains] = 0
+    losses *=-1
+
+    # Calculate the mean of the up days and the down days
+    avg_up = np.mean(gains[:period])
+    avg_down = np.mean(losses[:period])
+
+    if avg_down == 0:
+        rsi[0] = 100
+    else:
+        RS = avg_up/avg_down
+        rsi[0] = 100 - (100/(1+RS))
+
+    for i in range(1,data_range):
+        avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
+                period
+        avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
+                period
+
+        if avg_down == 0:
+            rsi[i] = 100
+        else:
+            RS = avg_up/avg_down
+            rsi[i] = 100 - (100/(1+RS))
+
+    return rsi
+
+def MO():
+	print MO
+	return MO[1]
+
+def search(request,name):
+
+	pred1 = CallBayesian(name,10)
+
+	pred2 = CallNeural(name)
+
+	#pred3 = CallSVM(name,10)
+	pred3 = 4444
+
+	#RSIndex = RSI(dataset)
+	RSIndex = 4444
+
+	#MA = MO()
+	MA = 4444
+	# THIRD INDICATOR
+
+
+	return render(request, 'realtime/search.html',{'name':name, 'pred1':pred1, 'pred2':pred2, 'pred3':pred3, 'RSIndex':RSIndex, 'MA':MA})
