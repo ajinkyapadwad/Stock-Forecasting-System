@@ -31,9 +31,6 @@ def contact(request):
 	return render(request, 'realtime/contact.html') 
 
 
-	
-# # ------------------------------------------------------------
-
 # # ----------------------- REALTIME / HISTORICAL  DATA LOGGING----------------------------
 import numpy
 import math
