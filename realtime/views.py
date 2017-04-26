@@ -669,7 +669,7 @@ def CallSVM(name, day):
     
     return predicted_price
 
-# # ------------------------------------------------------------------------------------------------------
+# # ------------------------------------   INDICATORS ------------------------------------------------------------------
 
 
 
@@ -727,12 +727,160 @@ def MO():
 	print MO
 	return MO[1]
 
+## ---------------------------------- QUERIES -----------------------------------------------------------
+
+# Latest price for given stock
+def GetLatestPrice(name):
+	print(name)
+	data=[]
+	if name in ('amzn'):
+		sql = "SELECT price FROM Amazon LIMIT 1"
+	elif name in ('aapl'):
+		sql = "SELECT price FROM Apple LIMIT 1"
+	elif name in ('fb'):
+		sql = "SELECT price FROM Facebook LIMIT 1"
+	elif name in ('goog'):
+		sql = "SELECT price FROM Google LIMIT 1"
+	elif name in ('ea'):
+		sql = "SELECT price FROM EAsports LIMIT 1"
+	elif name in ('msft'):
+		sql = "SELECT price FROM Microsoft LIMIT 1"
+	elif name in ('wmt'):
+		sql = "SELECT price FROM Walmart LIMIT 1"
+	elif name in ('yhoo'):
+		sql = "SELECT price FROM Yahoo LIMIT 1"
+	elif name in ('sne'):
+		sql = "SELECT price FROM Sony LIMIT 1"
+	elif name in ('ninoy'):
+		sql = "SELECT price FROM Nikon LIMIT 1"
+
+	cursor2.execute(sql)
+	results = cursor2.fetchall()
+	for row in results:
+		data.append(row[0])
+	#print ('price', results)
+
+	#prediction = bayesian(data)
+	#prediction = 
+	print ("Returns the latest price of each company : ", results)
+	return round(results[0][0],2)
+
+# highest price in past 10 days
+def GetMaximumPrice(name):
+	print(name)
+	data=[]
+	if name in ('amzn'):
+		sql = "SELECT MAX(price) FROM Amazon LIMIT 10"
+	elif name in ('aapl'):
+		sql = "SELECT MAX(price) FROM Apple LIMIT 10"
+	elif name in ('fb'):
+		sql = "SELECT MAX(price) FROM Facebook LIMIT 10"
+	elif name in ('goog'):
+		sql = "SELECT MAX(price) FROM Google LIMIT 10"
+	elif name in ('ea'):
+		sql = "SELECT MAX(price) FROM EAsports LIMIT 10"
+	elif name in ('msft'):
+		sql = "SELECT MAX(price) FROM Microsoft LIMIT 10"
+	elif name in ('wmt'):
+		sql = "SELECT MAX(price) FROM Walmart LIMIT 10"
+	elif name in ('yhoo'):
+		sql = "SELECT MAX(price) FROM Yahoo LIMIT 10"
+	elif name in ('sne'):
+		sql = "SELECT MAX(price) FROM Sony LIMIT 10"
+	elif name in ('ninoy'):
+		sql = "SELECT MAX(price) FROM Nikon LIMIT 10"
+
+	cursor2.execute(sql)
+	results = cursor2.fetchall()
+	for row in results:
+		data.append(row[0])
+	#print ('price', results)
+
+	#prediction = bayesian(data)
+	#prediction = 
+	print ("Returns the max value of last 10 days : ", results)
+	return round(results[0][0],2)
+
+# lowest price in past one year
+def GetMinimumPrice(name):
+	print(name)
+	data=[]
+	if name in ('amzn'):
+		sql = "SELECT MIN(price) FROM Amazon LIMIT 365"
+	elif name in ('aapl'):
+		sql = "SELECT MIN(price) FROM Apple LIMIT 365"
+	elif name in ('fb'):
+		sql = "SELECT MIN(price) FROM Facebook LIMIT 365"
+	elif name in ('goog'):
+		sql = "SELECT MIN(price) FROM Google LIMIT 365"
+	elif name in ('easports'):
+		sql = "SELECT MIN(price) FROM EAsports LIMIT 365"
+	elif name in ('msft'):
+		sql = "SELECT MIN(price) FROM Microsoft LIMIT 365"
+	elif name in ('wmt'):
+		sql = "SELECT MIN(price) FROM Walmart LIMIT 365"
+	elif name in ('yhoo'):
+		sql = "SELECT MIN(price) FROM Yahoo LIMIT 365"
+	elif name in ('sne'):
+		sql = "SELECT MIN(price) FROM Sony LIMIT 365"
+	elif name in ('ninoy'):
+		sql = "SELECT MIN(price) FROM Nikon LIMIT 365"
+
+	cursor2.execute(sql)
+	results = cursor2.fetchall()
+	for row in results:
+		data.append(row[0])
+	#print ('price', results)
+
+	#prediction = bayesian(data)
+	#prediction = 
+	print ("Returns the max value of last 10 days : ", results)
+	return round(results[0][0],0)
+
+# average price in past one year
+def GetAveragePrice(name):
+	print(name)
+	data=[]
+	if name in ('amzn'):
+		sql = "SELECT AVG(price) FROM Amazon LIMIT 365"
+	elif name in ('aapl'):
+		sql = "SELECT AVG(price) FROM Apple LIMIT 365"
+	elif name in ('fb'):
+		sql = "SELECT AVG(price) FROM Facebook LIMIT 365"
+	elif name in ('google'):
+		sql = "SELECT AVG(price) FROM Google LIMIT 365"
+	elif name in ('easports'):
+		sql = "SELECT AVG(price) FROM EAsports LIMIT 365"
+	elif name in ('msft'):
+		sql = "SELECT AVG(price) FROM Microsoft LIMIT 365"
+	elif name in ('wmt'):
+		sql = "SELECT AVG(price) FROM Walmart LIMIT 365"
+	elif name in ('yhoo'):
+		sql = "SELECT AVG(price) FROM Yahoo LIMIT 365"
+	elif name in ('sne'):
+		sql = "SELECT AVG(price) FROM Sony LIMIT 365"
+	elif name in ('ninoy'):
+		sql = "SELECT AVG(price) FROM Nikon LIMIT 365"
+
+	cursor2.execute(sql)
+	results = cursor2.fetchall()
+	for row in results:
+		data.append(row[0])
+
+	print ("Returns the avg value of last 1yr : ", results)
+	return round(results[0][0],2)
+
+# list of companies with average less than selected stock
+def GetBelowAverage(name):
+	return 0
+
+# # ---------------------------------------------------------------------
 def search(request,name):
 
 	pred1 = CallBayesian(name,10)
 
 	pred2 = CallNeural(name)
-
+	pred2 = pred2 - (0.1 * pred2)
 	#pred3 = CallSVM(name,10)
 	pred3 = 4444
 
@@ -743,5 +891,21 @@ def search(request,name):
 	MA = 4444
 	# THIRD INDICATOR
 
+	LatestPrice = GetLatestPrice(name)
+	MaximumPrice = GetMaximumPrice(name)
+	MinimumPrice = GetMinimumPrice(name)
+	AveragePrice = GetAveragePrice(name)
 
-	return render(request, 'realtime/search.html',{'name':name, 'pred1':pred1, 'pred2':pred2, 'pred3':pred3, 'RSIndex':RSIndex, 'MA':MA})
+	return render(request, 'realtime/search.html',
+		{
+			'name':name, 
+			'pred1':pred1, 
+			'pred2':pred2, 
+			'pred3':pred3, 
+			'RSIndex':RSIndex, 
+			'MA':MA,
+			'LatestPrice' :LatestPrice,
+			'MaximumPrice':MaximumPrice,
+			'MinimumPrice':MinimumPrice,
+			'AveragePrice':AveragePrice
+		})

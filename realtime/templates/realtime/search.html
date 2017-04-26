@@ -7,13 +7,48 @@
 <HEAD>
 {% load staticfiles %}
 
-	<TITLE>{{name}}</TITLE>
+	
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="{% static 'realtime/css/style.css' %}" rel="stylesheet" type="text/css" />	
+
+  <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"  href="{% static 'realtime/css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/fonts/font-awesome/css/font-awesome.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/css/menusearch.css' %}">
+
+    <!-- Stylesheet
+    ================================================== -->
+    <link rel="stylesheet" type="text/css"  href="{% static 'realtime/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'realtime/css/responsive.css' %}">
+
+    <script type="text/javascript" src="{% static 'realtime/js/modernizr.custom.js' %}"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,600,700,100,800,900,400,200,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+
+
+
+    <script type="text/javascript" src="{% static 'realtime/js/jquery.1.11.1.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'realtime/js/jquery-1.10.2.min.js' %}"></script>
+
+    <script src="{% static 'realtime/js/handlebars.js' %}"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
 </HEAD>
 
 <BODY>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'realtime/js/jquery.1.11.1.js'%}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="{% static 'realtime/js/bootstrap.js'%}"></script>
+
+    <!-- Javascripts
+    ================================================== -->
+     <script src="{% static 'realtime/js/typeahead.js'%}"></script>
+      <script src="{% static 'realtime/js/search.js'%}"></script>
 
 	<div class="header">
     	<div class="logo">
@@ -33,14 +68,17 @@
    <div class="clr"></div>
     <div class="hbg"><img src="{% static 'realtime/img/header.jpeg' %}" width="970" height="200" alt="" class="fl" />
 
-    <div class="footer">
-	    <div class="footer_resize">
-	      <p class="lf">&copy; Copyright <a href="#">PredStocks</a>.</p>
-	      
-	      
-	    </div>
-  	</div>
+            
+          </div>
+          <div class="clr"></div>
+     </div>
+     <TITLE>{{name}}</TITLE>
+	<!-- TWITTER API -->
 
+	<a class="twitter-timeline" data-lang="en" data-height="300" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/amazon">
+		</a> 
+		<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  	
   	<h1> Predictions </h1>
   	
   	<br>
@@ -78,5 +116,37 @@
     <br>
     <br>
 
+
+   <h2> Latest price : {{LatestPrice}} </h2>
+
+    <br>
+    <br>
+
+   <h2> Maximum Price ( past 10 days ) : {{ MaximumPrice }} </h2>
+
+    <br>
+    <br>
+
+   <h2> Lowest Price (Past 1 year): {{ MinimumPrice}} </h2>
+
+    <br>
+    <br>
+
+   <h2> Average Price (past 1 year) : {{ AveragePrice}} </h2>
+
+    <br>
+    <br>
+
+   <h2> List of below avg companies : ??? </h2>
+
+    <br>
+    <br>
+
+        <div class="footer">
+      <div class="footer_resize">
+        <p class="lf">&copy; Copyright <a href="#">PredStocks</a>.</p>
+    
+      </div>
+    </div>
 </BODY>
 </HTML>
