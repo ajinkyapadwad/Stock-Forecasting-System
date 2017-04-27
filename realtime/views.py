@@ -257,7 +257,7 @@ def Bayesian(data,days):
 
 dataset=[]
 def CallBayesian(name,days):
-	print(name)
+	# print(name)
 	data=[]
 	if name in ('amzn'):
 		sql = "SELECT price FROM Amazon"
@@ -422,7 +422,7 @@ class NeuralNetwork:
 		#print('Input weights:')
 		for i in range(self.inputNodes):
 			print(self.inputWeight[i])
-		print()
+		#print()
 		#print('Output weights:')
 		for j in range(self.hiddenNodes):
 			print(self.outputWeight[j])
@@ -436,8 +436,8 @@ class NeuralNetwork:
 				targets = p[1]
 				self.update(inputs)
 				error = error + self.backPropagate(targets, N, M)
-			if i % 100 == 0:
-				print('error %-.5f' % error)
+			# if i % 100 == 0:
+			# 	print('error %-.5f' % error)
 
    
 def normalizePrice(price, minimum, maximum):
@@ -596,7 +596,7 @@ def CallNeural(stockSymbol):
 
 
 # # ------------------------------------------------------------------------------------------------------
-
+ 
 # # ---------------------------------- SUPPORT VECTOR MACHINE -----------------------------------------------
 
 import scipy
@@ -604,121 +604,147 @@ from scipy.stats import norm
 from sklearn.svm import SVR, SVC, LinearSVC
 
 def CallSVM(name, day):
-    '''
-    Input: Name of the stock, How many days of after current day to get predicted price
-    Output: Predicted Price for next n days
-    '''
-    data = getHistoricalData(name)
-    data = data[::-1]
-    open_price_list = []
-    close_price_list = []
-    predicted_price=[]
-    for i in xrange(len(data)):
-        open_price_list.append(data[i][1])
-        close_price_list.append(data[i][2])
-    for iterations in range(day):
-        close_price_dataset=[]
-        open_price_dataset=[]
-        previous_ten_day_close_price_dataset=[]
-        g=0
-        h=50
-        while h<len(close_price_list):
-            previous_ten_day_close_price_dataset.append(close_price_list[g:h])
-            open_price_dataset.append(open_price_list[h])
-            close_price_dataset.append(close_price_list[h])
-            g += 1
-            h += 1
-        moving_average_dataset=[]
-        for x in previous_ten_day_close_price_dataset:
-            i=0
-            for y in x:
-                i=i+y
-            moving_average_dataset.append(i/10)
-        feature_dataset = []
-        for j in range(len(close_price_dataset)):
-            list = []
-            list.append(moving_average_dataset[j])
-            list.append(open_price_dataset[j])
-            feature_dataset.append(list)
-        feature_dataset = numpy.array(feature_dataset)        
-        close_price_dataset = numpy.array(close_price_dataset)
-        clf = SVR(kernel='linear',degree=1)
-        clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
-        target = []
-        if iterations==0:
-            url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
-            stock_info = Share(name)
-            list = []
-            list.append(stock_info.get_open())
-            list.append(stock_info.get_50day_moving_avg())
-            target.append(list)
-            
-        else:
-            list = []
-            list.append(moving_average_dataset[-1])
-            list.append(open_price_dataset[-1])
-            target.append(list)
+	'''
+	Input: Name of the stock, How many days of after current day to get predicted price
+	Output: Predicted Price for next n days
+	'''
+	# data = getHistoricalData(name)
+	data=[]
+	if name in ('amzn'):
+		sql = "SELECT price FROM Amazon"
+	elif name in ('aapl'):
+		sql = "SELECT price FROM Apple"
+	elif name in ('fb'):
+		sql = "SELECT price FROM Facebook"
+	elif name in ('goog'):
+		sql = "SELECT price FROM Google"
+	elif name in ('ea'):
+		sql = "SELECT price FROM EAsports"
+	elif name in ('msft'):
+		sql = "SELECT price FROM Microsoft"
+	elif name in ('wmt'):
+		sql = "SELECT price FROM Walmart"
+	elif name in ('yhoo'):
+		sql = "SELECT price FROM Yahoo"
+	elif name in ('sne'):
+		sql = "SELECT price FROM Sony"
+	elif name in ('ninoy'):
+		sql = "SELECT price FROM Nikon"
 
-        predicted_close_price = clf.predict(target)[0]
-        predicted_price.append(predicted_close_price)
-        open_price_list.append(close_price_list[-1])
-        close_price_list.append(predicted_close_price)
-    
-    return predicted_price
+	cursor2.execute(sql)
+	results = cursor2.fetchall()
+	for row in results:
+		data.append(row[0])
+
+	data = data[::-1]
+	open_price_list = []
+	close_price_list = []
+	predicted_price=[]
+	for i in range(len(data)):
+		open_price_list.append(data[i][1])
+		close_price_list.append(data[i][2])
+	for iterations in range(day):
+		close_price_dataset=[]
+		open_price_dataset=[]
+		previous_ten_day_close_price_dataset=[]
+		g=0
+		h=50
+		while h<len(close_price_list):
+			previous_ten_day_close_price_dataset.append(close_price_list[g:h])
+			open_price_dataset.append(open_price_list[h])
+			close_price_dataset.append(close_price_list[h])
+			g += 1
+			h += 1
+		moving_average_dataset=[]
+		for x in previous_ten_day_close_price_dataset:
+			i=0
+			for y in x:
+				i=i+y
+			moving_average_dataset.append(i/10)
+		feature_dataset = []
+		for j in range(len(close_price_dataset)):
+			list = []
+			list.append(moving_average_dataset[j])
+			list.append(open_price_dataset[j])
+			feature_dataset.append(list)
+		feature_dataset = numpy.array(feature_dataset)        
+		close_price_dataset = numpy.array(close_price_dataset)
+		clf = SVR(kernel='linear',degree=1)
+		clf.fit(feature_dataset[-365:],close_price_dataset[-365:])
+		target = []
+		if iterations==0:
+			url_string = "http://www.google.com/finance/getprices?q={0}".format(name)
+			stock_info = Share(name)
+			list = []
+			list.append(stock_info.get_open())
+			list.append(stock_info.get_50day_moving_avg())
+			target.append(list)
+			
+		else:
+			list = []
+			list.append(moving_average_dataset[-1])
+			list.append(open_price_dataset[-1])
+			target.append(list)
+
+		predicted_close_price = clf.predict(target)[0]
+		predicted_price.append(predicted_close_price)
+		open_price_list.append(close_price_list[-1])
+		close_price_list.append(predicted_close_price)
+	
+	return predicted_price
 
 # # ------------------------------------   INDICATORS ------------------------------------------------------------------
 
 
-
 def RSI(prices):
-    # RSI is calculated using a period of 14 days
-    period = 14
-    # Range is one period less than the amount of prices input
-    data_range = len(prices) - period
-    # If there are less than 14 prices, the RSI cannot be calculated, and the system exits
-    if data_range < 0:
-        raise SystemExit
+	# RSI is calculated using a period of 14 days
+	period = 14
+	# Range is one period less than the amount of prices input
+	data_range = len(prices) - period
+	# If there are less than 14 prices, the RSI cannot be calculated, and the system exits
+	if data_range < 0:
+		raise SystemExit
 
-    # Calculates the daily price change
-    price_change = prices[1:] - prices[:-1]
-    # An array of zeros the length of data_range is created
-    rsi = np.zeros(data_range)
+	# Calculates the daily price change
+	price_change = prices[1:] - prices[:-1]
+	# An array of zeros the length of data_range is created
+	rsi = np.zeros(data_range)
 
-    # Creates an array with the price changes
-    gains = np.array(price_change)
-    # Only the positive values will be kept in the gains array
-    negative_gains = gains < 0
-    gains[negative_gains] = 0
+	# Creates an array with the price changes
+	gains = np.array(price_change)
+	# Only the positive values will be kept in the gains array
+	negative_gains = gains < 0
+	gains[negative_gains] = 0
 
-    # Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
-    losses = np.array(price_change)
-    positive_gains = gains > 0
-    losses[positive_gains] = 0
-    losses *=-1
+	# Creates an array of losses where only the negative values are kept, and then multiplied by -1 for the next step
+	losses = np.array(price_change)
+	positive_gains = gains > 0
+	losses[positive_gains] = 0
+	losses *=-1
 
-    # Calculate the mean of the up days and the down days
-    avg_up = np.mean(gains[:period])
-    avg_down = np.mean(losses[:period])
+	# Calculate the mean of the up days and the down days
+	avg_up = np.mean(gains[:period])
+	avg_down = np.mean(losses[:period])
 
-    if avg_down == 0:
-        rsi[0] = 100
-    else:
-        RS = avg_up/avg_down
-        rsi[0] = 100 - (100/(1+RS))
+	if avg_down == 0:
+		rsi[0] = 100
+	else:
+		RS = avg_up/avg_down
+		rsi[0] = 100 - (100/(1+RS))
 
-    for i in range(1,data_range):
-        avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
-                period
-        avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
-                period
+	for i in range(1,data_range):
+		avg_up = (avg_up * (period-1) + gains[i + (period - 1)])/ \
+				period
+		avg_down = (avg_down * (period-1) + losses[i + (period - 1)])/ \
+				period
 
-        if avg_down == 0:
-            rsi[i] = 100
-        else:
-            RS = avg_up/avg_down
-            rsi[i] = 100 - (100/(1+RS))
+		if avg_down == 0:
+			rsi[i] = 100
+		else:
+			RS = avg_up/avg_down
+			rsi[i] = 100 - (100/(1+RS))
 
-    return rsi
+	return rsi
 
 def MO():
 	print MO
@@ -869,20 +895,171 @@ def GetAveragePrice(name):
 
 # list of companies with average less than selected stock
 def GetBelowAverage(name):
-	return 0
+
+	data=[]
+	if name in ('amzn'):
+		# sql = "SELECT MIN(price) FROM Amazon LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		GetMinimumPrice('amzn')
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('amzn')):
+				data.append(company)
+
+	elif name in ('aapl'):
+		# sql = "SELECT MIN(price) FROM Apple LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('aapl')):
+				data.append(company)
+
+	elif name in ('fb'):
+		# sql = "SELECT MIN(price) FROM Facebook LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('fb')):
+				data.append(company)
+
+	elif name in ('google'):
+		# sql = "SELECT MIN(price) FROM Google LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('google')):
+				data.append(company)
+
+	elif name in ('easports'):
+		# sql = "SELECT MIN(price) FROM EAsports LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('easports')):
+				data.append(company)
+
+	elif name in ('msft'):
+		# sql = "SELECT MIN(price) FROM Microsoft LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('msft')):
+				data.append(company)
+
+	elif name in ('wmt'):
+		# sql = "SELECT MIN(price) FROM Walmart LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('wmt')):
+				data.append(company)
+
+	elif name in ('yhoo'):
+		# sql = "SELECT MIN(price) FROM Yahoo LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('yhoo')):
+				data.append(company)
+
+	elif name in ('sne'):
+		# sql = "SELECT MIN(price) FROM Sony LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('sne')):
+				data.append(company)
+
+	elif name in ('ninoy'):
+		# sql = "SELECT MIN(price) FROM Nikon LIMIT 365"
+		# cursor2.execute(sql)
+		# results = cursor2.fetchall()
+		for company in ('amzn','aapl','fb','google','easports','msft','wmt','yhoo','sne','ninoy'):
+			if (GetAveragePrice(company) < GetMinimumPrice('ninoy')):
+				data.append(company)
+
+	# print data
+	# return data
+
+	finaldata = []
+	for name in data:
+		if name in ('amzn'):
+			finaldata.append('Amazon')
+		if name in ('aapl'):
+			finaldata.append('Apple')
+		if name in ('fb'):
+			finaldata.append('Facebook')
+		if name in ('goog'):
+			finaldata.append('Google')
+		if name in ('ea'):
+			finaldata.append('EASports')
+		if name in ('msft'):
+			finaldata.append('Microsoft')
+		if name in ('wmt'):
+			finaldata.append('Walmart')
+		if name in ('yhoo'):
+			finaldata.append('Yahoo')
+		if name in ('sne'):
+			finaldata.append('Sony')
+		if name in ('ninoy'):
+			finaldata.append('Nikon')
+
+	print finaldata
+	return finaldata
 
 # # ---------------------------------------------------------------------
 def search(request,name):
 
-	pred1 = CallBayesian(name,10)
+	
+	baye1 = CallBayesian(name,10)
+	baye2 = CallBayesian(name,10)
+	baye3 = CallBayesian(name,10)
 
-	pred2 = CallNeural(name)
-	pred2 = pred2 - (0.1 * pred2)
+	baye4 = CallBayesian(name,10)
+	baye5 = CallBayesian(name,10)
+	baye6 = CallBayesian(name,10)
+	
+	baye7 = CallBayesian(name,10)
+	baye8 = CallBayesian(name,10)
+	baye9 = CallBayesian(name,10)
+
+	neu1 = CallNeural(name)
+	neu1 = neu1 - (0.1 * neu1)
+	neu2 = CallNeural(name)
+	neu2 = neu2 - (0.1 * neu2)
+	neu3 = CallNeural(name)
+	neu3 = neu3 - (0.1 * neu3)
+	neu4 = CallNeural(name)
+	neu4 = neu4 - (0.1 * neu4)
+	neu5 = CallNeural(name)
+	neu5 = neu5 - (0.1 * neu5)
+	neu6 = CallNeural(name)
+	neu6 = neu6 - (0.1 * neu6)
+	neu7 = CallNeural(name)
+	neu7 = neu7 - (0.1 * neu7)
+	neu8 = CallNeural(name)
+	neu8 = neu8 - (0.1 * neu8)
+	neu9 = CallNeural(name)
+	neu9 = neu9 - (0.1 * neu9)
+
+	# svm1 = CallSVM(name,10)
+	# svm2 = CallSVM(name,10)
+	# svm3 = CallSVM(name,10)
+	# svm4 = CallSVM(name,10)
+	# svm5 = CallSVM(name,10)
+	# svm6 = CallSVM(name,10)
+	# svm7 = CallSVM(name,10)
+	# svm8 = CallSVM(name,10)
+	# svm9 = CallSVM(name,10)
+
+	# pred1= CallBayesian(name,10)
+	# pred2 = CallNeural(name)
+	# pred2 = pred2 - (0.1 * pred2)
 	#pred3 = CallSVM(name,10)
-	pred3 = 4444
+	pred3 = 0
 
 	#RSIndex = RSI(dataset)
-	RSIndex = 4444
+	RSIndex = 0
 
 	#MA = MO()
 	MA = 4444
@@ -892,17 +1069,41 @@ def search(request,name):
 	MaximumPrice = GetMaximumPrice(name)
 	MinimumPrice = GetMinimumPrice(name)
 	AveragePrice = GetAveragePrice(name)
-
+	BelowAverage = GetBelowAverage(name)
+	#BelowAverage = 0
 	return render(request, 'realtime/search.html',
 		{
 			'name':name, 
-			'pred1':pred1, 
-			'pred2':pred2, 
+			# 'pred1':pred1, 
+			# 'pred2':pred2, 
+
+			'baye1':baye1,
+			'baye2':baye2,
+			'baye3':baye3,
+			'baye4':baye4,
+			'baye5':baye5,
+			'baye6':baye6,
+			'baye7':baye7,
+			'baye8':baye8,
+			'baye9':baye9,
+
+			'neu1':neu1,
+			'neu2':neu2,
+			'neu3':neu3,
+			'neu4':neu4,
+			'neu5':neu5,
+			'neu6':neu6,
+			'neu7':neu7,
+			'neu8':neu8,
+			'neu9':neu9,
+
+
 			'pred3':pred3, 
 			'RSIndex':RSIndex, 
 			'MA':MA,
 			'LatestPrice' :LatestPrice,
 			'MaximumPrice':MaximumPrice,
 			'MinimumPrice':MinimumPrice,
-			'AveragePrice':AveragePrice
+			'AveragePrice':AveragePrice,
+			'BelowAverage':BelowAverage
 		})

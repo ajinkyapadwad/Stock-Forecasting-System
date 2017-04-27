@@ -74,78 +74,154 @@
      </div>
      <TITLE>{{name}}</TITLE>
 
+  <h1> Stock Forecast </h1>
 
-	<!-- TWITTER API -->
-      
-	    <a class="twitter-timeline" data-lang="en" data-height="300" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/{{name}}">
-		  </a> 
-		  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
   
+<table align="center" class="table table-hover">
+    <tr>
+      <th>#</th>
+      <th>Duration </th>
+      <th>Bayesian Curve Fitting</th>
+      <th>Artificial Neural Network</th>
+      <th>State Vector Machine</th>
+    </tr>
+        <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>5 minutes</td>
+                  <td>{{ baye1 }}</td>
+                  <td>{{ neu1 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>10 minutes </td>
+                  <td>{{ baye2 }}</td>
+                  <td>{{ neu2 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>15 minutes</td>
+                  <td>{{ baye3 }}</td>
+                  <td>{{ neu3 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+              </tbody>
+              <br>
+          <tbody>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>2 hours</td>
+                  <td>{{ baye4 }}</td>
+                  <td>{{ neu4 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>4 hours</td>
+                  <td>{{ baye5 }}</td>
+                  <td>{{ neu5 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">6</th>
+                  <td >6 hours</td>
+                  <td>{{ baye6 }}</td>
+                  <td>{{ neu6 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+              </tbody>
+              <br>
+          <tbody>
+                <tr>
+                  <th scope="row">7</th>
+                  <td>1 day</td>
+                  <td>{{ baye7 }} </td>
+                  <td>{{ neu7 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">8</th>
+                  <td>1 month</td>
+                  <td>{{ baye8 }}</td>
+                  <td>{{ neu8 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">9</th>
+                  <td>2 months</td>
+                  <td>{{ baye9 }}</td>
+                  <td>{{ neu9 }}</td>
+                  <td>{{pred3}}</td>
+                </tr>
+              </tbody>
+</table>
+ 
+ <br>
+<div align="center">
+<table align="center" class="table table-hover">
+    <tr>
+      <th>#</th>
+      <th>Relative Strength Index </th>
+      <th>Moving Average</th>
+      <th>Rate of Change</th>
+    </tr>
+        <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>{{ RSIndex }}</td>
+                  <td> {{ MA }}</td>
+                  <td> ROC </td>
+               </tr>
+        </tbody>
+</table>
 
 
-  	<h1> Predictions </h1>
-  	
-  	<br>
-  	<br>
+<br>
+<table align="center" class="table table-hover">
+    <tr>
+      <th>#</th>
+      <th>Query </th>
+      <th>Price</th>
+    </tr>
+        <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td> Latest Price </td>
+                  <td>{{LatestPrice}}</td>
+               </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td> Maximum Price ( past 10 days )</td>
+                  <td>{{ MaximumPrice }}</td>
+               </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Lowest Price (Past 1 year)</td>
+                  <td>{{ MinimumPrice}} </td>
+               </tr>
+                <tr>
+                  <th scope="row">4</th>
+                  <td>Average Price (past 1 year)</td>
+                  <td>{{ AveragePrice}}</td>
+               </tr>
+                <tr>
+                  <th scope="row">5</th>
+                  <td>List of below avg companies </td>
+                  <td>{{ BelowAverage }}</td>
+               </tr>
 
-  	<h2> Bayesian Method : {{ pred1 }} </h2>
+  </tbody>
 
-  	<br>
-  	<br>
-
-
-  	<h2> Artificial Neural Network : {{ pred2 }} </h2>
-
-  	<br>
-  	<br>
-
-  	<h2> Support Vector Machine : {{ pred3 }} </h2>
-
-  	<br>
-  	<br>
-
-
-    <h2> Relative Strength Index : {{ RSIndex }} </h2>
-
-    <br>
-    <br>
-
-    <h2> Moving Average : {{ MA }} </h2>
-
-    <br>
-    <br>
-
-   <h2> THIRD INDICATOR : ??? </h2>
-
-    <br>
-    <br>
-
-
-   <h2> Latest price : {{LatestPrice}} </h2>
-
-    <br>
-    <br>
-
-   <h2> Maximum Price ( past 10 days ) : {{ MaximumPrice }} </h2>
-
-    <br>
-    <br>
-
-   <h2> Lowest Price (Past 1 year): {{ MinimumPrice}} </h2>
-
-    <br>
-    <br>
-
-   <h2> Average Price (past 1 year) : {{ AveragePrice}} </h2>
-
-    <br>
-    <br>
-
-   <h2> List of below avg companies : ??? </h2>
-
-    <br>
-    <br>
-
+</table>
+</div>
+  <!-- TWITTER API -->
+ <!--      
+      <a class="twitter-timeline" data-lang="en" data-height="300" data-theme="light" data-link-color="#2B7BB9" href="https://twitter.com/{{name}}">
+      </a> 
+      <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+      
         <div class="footer">
       <div class="footer_resize">
         <p class="lf">&copy; Copyright <a href="#">PredStocks</a>.</p>
