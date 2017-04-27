@@ -41,7 +41,7 @@
       <div class="article">
         <h2>This dividend stock ETF can help you make money by avoiding losses</h2>
         <div class="clr"></div>
-        <p>Article from <a href="#">The Wall Street Journal</a> <span>&nbsp;&bull;&nbsp;</span> Filed under <a href="#">templates</a>, <a href="#">internet</a></p>
+        <p>Article from <a href="#">The Wall Street Journal</a> <span>&nbsp;&bull;&nbsp;</span> </p>
         <p>With U.S. stocks near record highs, some investors may be thinking the eight-year bull market can continue for longer, especially under a new administration with a pro-business agenda.
 
 Investors are “under-reacting to potential risks,” says James Norman, president of QS Investors. That can lead to poor decision making because “people tend to sell at the bottom,” he said in an interview April 11.
@@ -51,8 +51,7 @@ Norman favors a strategy of selecting stocks with relatively high dividends that
 QS Investors is a subsidiary of Legg Mason Inc. LM, -0.41%  in New York and manages about $16.6 billion using various strategies for institutions, mutual funds and exchange traded funds. </p> <p>In the interview, Norman focused on the Legg Mason Low-Volatility High-Dividend ETF LVHD, -0.37% which was started in December 2015 and has $128 million in assets. The ETF’s beta, for example, is 0.52, compared with 1 for the market index. A beta of less than 1 means that a security is theoretically less volatile than the market.
 
 The ETF has a 30-day yield of 2.88%, which is a reasonably attractive figure when considering that Norman is seeking low volatility when selecting stocks and that 10-year U.S. Treasury notes TMUBMUSD10Y, +0.00%  are yielding about 2.3%.</p>
-        <p>Tagged: <a href="#">ETF</a>, <a href="#">Investors</a>, <a href="#">Stocks</a>, <a href="#">Dividend</a></p>
-        <p><a href="#"><strong>Comments </strong></a> <span>&nbsp;&bull;&nbsp;</span> May 27, 2010 <span>&nbsp;&bull;&nbsp;</span> <a href="#"><strong>Edit</strong></a></p>
+        
       </div>
       <div class="article">
         <h2><span></span> Comments</h2>
@@ -104,16 +103,18 @@ you have a strong net positive return.
     </div>
     <div class="sidebar">
       <div class="gadget">
-        <div class="search">
-          <form method="get" id="search" action="#">
-            <span>
-            <input type="text" value="Search..." name="s" id="s" />
-            <input name="searchsubmit" type="image" src="{% static 'realtime/img/search.gif' %}" value="Go" id="searchsubmit" class="btn"  />
-            </span>
-          </form>
-          <!--/searchform -->
+        
           <div class="clr"></div>
-        </div>
+
+            <form method="get" action="http://www.google.com/search">
+    <input type="text"   name="q" size="25" maxlength="255" value="" />
+	</br>
+	
+    <input type="submit" value="Search Web" />
+    </form>
+          
+          <div class="clr"></div>
+        
       </div>
      
       <div class="gadget">
@@ -121,23 +122,23 @@ you have a strong net positive return.
         <div class="clr"></div>
 		<marquee behavior=scroll direction = "down" onmouseover = "this.stop();" onmouseout = "this.start();" scrollamount = "5">
         <ul class="ex_menu">
-          <li><a href="News8.html">Data Clash Heats Up Between Banks and New York Stock Exchange</a><br />
+          <li><a href="{% url 'news8' %}">Data Clash Heats Up Between Banks and New York Stock Exchange</a><br />
             Wall Street Journal</li>
-          <li><a href="News7.html">Charting the Market</a><br />
+          <li><a href="{% url 'news7' %}">Charting the Market</a><br />
             BARRON'S</li>
-          <li><a href="News6.html">The Muni Market Turns Toward Washington</a><br />
+          <li><a href="{% url 'news6' %}">The Muni Market Turns Toward Washington</a><br />
            New York Times</li>
-          <li><a href="News5.html">Tesla’s Market Surge Has Even Fans Looking for Feet of Clay</a><br />
+          <li><a href="{% url 'news5' %}">Tesla’s Market Surge Has Even Fans Looking for Feet of Clay</a><br />
             New York Times</li>
-          <li><a href="News4.html">What Fiancial Markets can teach us about managing Climate Risks</a><br />
+          <li><a href="{% url 'news4' %}">What Fiancial Markets can teach us about managing Climate Risks</a><br />
            New York Times</li>
-          <li><a href="News3.html">Profiting From the Stock Market’s Latest Fears </a><br />
+          <li><a href="{% url 'news3' %}">Profiting From the Stock Market’s Latest Fears </a><br />
             CNN</li>
-			<li><a href="News2.html">Red flags going up across markets, signal possible pullback for stocks</a><br />
+			<li><a href="{% url 'news2' %}">Red flags going up across markets, signal possible pullback for stocks</a><br />
             CNBC</li>
-			<li><a href="News1.html">Volatility is on the move in the stock market </a><br />
+			<li><a href="{% url 'news1' %}">Volatility is on the move in the stock market </a><br />
             Market Watch</li>
-			<li><a href="blog.html">This dividend stock ETF can help you make money by avoiding losses </a><br />
+			<li class="active"><a href="{% url 'news' %}">This dividend stock ETF can help you make money by avoiding losses </a><br />
             Market Watch</li>
         </ul>
 		</marquee>
@@ -145,6 +146,28 @@ you have a strong net positive return.
     </div>
     <div class="clr"></div>
   </div>
+  <div class="fbg">
+    <div class="fbg_resize">
+      <div class="col c1">
+        <h2><span>Image Gallery</span></h2>
+        <a href="#"><img src="{% static 'realtime/img/image2.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image3.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image4.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image5.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image6.jpg' %}" width="58" height="58" alt="" /></a> <a href="#"><img src="{% static 'realtime/img/image7.jpg' %}" width="58" height="58" alt="" /></a> </div>
+      
+      <div class="col c3" style="width:620px">
+        <h2><span>About Us</span></h2>
+		
+        The stock market can be a confusing place for the average investor. But you don't need to be a hedge-fund manager or a billionaire to beat Wall Street at its own game. 
+        We seek to help the ordinary individual investor make intelligent investments by providing information that gives you an edge. 
+        PredStocks uses state of the art software to predict stock prices and generate trading "Buy-Sell" signals that will help you make your decision.</p>
+      </div>
+      <div class="clr"></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer_resize">
+      <p class="lf">&copy; Copyright <a href="#">MyWebSite</a>.</p>
+      <div class="clr"></div>
+    </div>
+  </div>
   
-<div align=center>This template  downloaded form <a href='http://all-free-download.com/free-website-templates/'>free website templates</a></div></body>
+</body>
 </html>
