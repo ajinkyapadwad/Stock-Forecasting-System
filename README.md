@@ -25,27 +25,23 @@ Bayesian Prediction, Artificial Neural Network and Support Vector Machine
 4) to Run the sytem server:  
   a) Navigate to directory /stock-prediction/stockprediction/  
   b) Run the command "python manage.py runserver"
-----------realtime
-		This folder is the main base directory in the system. It contains the most important .py files like:
-			urls.py it has main URL mapping of the system. Maps all the urls to their URIs.
-
-----------Manage.py: It is main file in the system.
+  
+__realtime/__  
+This folder is the main base directory in the system. It contains the most important .py files like urls.py which has the main URL mapping of the system. Maps all the urls to their URIs. Manage.py is main file in the system.
 
 
-Directory structure:
+__Package structure:__
 
-Stock-Prediction-Systems - Main folder
+Stock-Prediction-Systems/  - Main folder  
 
-
-
-----------realtime
-		This folder is the main base directory in the system. It contains the most important .py files like:
-			settings.py Contains main settings for system. Go and put your mysql password here.
-			urls.py it has main URL mapping of the system. Maps all the urls to their URIs.
-----------Manage.py: It is main file in the system.
-	
-
-----------Templates- Contains all of the HTML templates of the system which is inside realtime.
+   realtime/  
+   This folder is the main base directory in the system. It contains important .py files like:  
+   settings.py : Contains main settings for system. Go and put your mysql password here.  
+   urls.py : has main URL mapping of the system. Maps all the urls to their URIs.
+   
+   Manage.py: It is main file in the system.  
+   
+   Templates- Contains all of the HTML templates of the system which is inside realtime.
 		index.html
 		prediction.html
 		news.html
@@ -53,9 +49,6 @@ Stock-Prediction-Systems - Main folder
 		contact.html
 		and all other html templates for graph plots.
 
-----------Static- Contains all the static files for the system like images, Javascript files, CSS files, fonts.
- 
------------ main App in our system.
-	
-		urls.py- maps urls of this app
-		views.py Contains all the functions to create views on the webpage.
+   Static/ : Contains all the static files for the system like images, Javascript files, CSS files, fonts.  
+   
+   views.py : Contains all the functions to create views on the webpage.
