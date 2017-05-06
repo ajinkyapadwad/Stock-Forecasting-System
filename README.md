@@ -11,7 +11,7 @@ LANGUAGE :  Python
 
 ----------------------------------------------------------------------------------------------------------
 
-__Prediction strategies -  __
+__Prediction strategies -__  
 Bayesian Prediction, Artificial Neural Network and Support Vector Machine
 
 ----------------------------------------------------------------------------------------------------------
