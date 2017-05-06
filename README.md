@@ -41,13 +41,13 @@ Stock-Prediction-Systems/  - Main folder
    
    Manage.py: It is main file in the system.  
    
-   Templates- Contains all of the HTML templates of the system which is inside realtime.
-		index.html
-		prediction.html
-		news.html
-		search.html
-		contact.html
-		and all other html templates for graph plots.
+   Templates- Contains all of the HTML templates of the system which is inside realtime.  
+   		index.html  
+		prediction.html  
+		news.html  
+		search.html  
+		contact.html  
+		    and all other html templates for graph plots.
 
    Static/ : Contains all the static files for the system like images, Javascript files, CSS files, fonts.  
    
