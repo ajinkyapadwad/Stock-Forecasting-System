@@ -1,8 +1,8 @@
-Spring 2017
+Spring 2017  
 Course : Software Engineering for Web Applications
 
 STOCK FORECASTING SYSTEM - __"PREDSTOCKS"__
--------------------------------------------
+===========================================
 
 FRAMEWORK : Django  
 SERVER : XAMPP  
